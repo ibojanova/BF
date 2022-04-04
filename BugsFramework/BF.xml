@@ -1,0 +1,1113 @@
+<!--@author Irena Bojanova(ivb)-->
+<!--@date - 2/9/2022-->
+
+<!-- an object contains data and has address, and size; the address and size are data contained by other objects 
+(the address specifically is the data of a pointer) - the data contained by this object and the other objects 
+has value and type - we use this level to connect the classes-->
+
+<BF Name="Bugs Framework">
+	<Classes Kind="_INP" Type="Bug/Weakness" Definition="Input/Output Check Bugs (with Injection as Final Error)">
+		<Class Name="DVL" Title="Data Validation Bugs" Definition="Data are validated (syntax check) or sanitized (escape, filter, repair) improperly.">
+			<Operations>
+				<Operation Name="Validate"/>
+				<Operation Name="Sanitize"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Safelist"/>
+					<Attribute Name="Denylist"/>
+					<Attribute Name="Format"/>
+					<Attribute Name="Length"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="xxx">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+				<AttributeType Name="Execution Space" Definition="xxx">
+					<Attribute Name="Local"/>
+					<Attribute Name="Admin"/>
+					<Attribute Name="Bare-Metal"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Data" Definition="The data writtten in the object memory.">
+					<AttributeType Name="State" Definition="xxx">
+						<Attribute Name="Entered"/>
+						<Attribute Name="Stored"/>
+						<Attribute Name="In Use"/>
+						<Attribute Name="Transferred"/>
+					</AttributeType>
+				</Operand>
+				<Operand Name="Policy Data" Definition="The data defining the policy (e.g. the values in a Safelist)."/>
+			</Operands>
+			<Causes>
+				<!--Improper Operation - "The Bug" - could be improper code or improper rules (Policy, Keying Material, Domain Parameter) code that has to be fixed to resolve to vulnerablity cause by this bug."-->
+				<BugCauseType Name="Improper Code" Definition="The Bug is a Coding Error">
+					<Cause Name="Missing"/>
+					<Cause Name="Erroneous"/>
+				</BugCauseType>
+				<BugCauseType Name="Improper Policy" Definition="The Bug is an Algorithmic Error">
+					<Cause Name="Under-Restrictive Policy"/>
+					<Cause Name="Over-Restrictive Policy"/>
+				</BugCauseType>
+				<!--Improper Operand - "Output (Result) From Previous Operation"-->
+				<WeaknessCauseType Name="Improper Data Value" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Corrupted Data"/>
+					<Cause Name="Tampered Data"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Policy Data" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Corrupted Policy"/>
+					<Cause Name="Tampered Policy"/>
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<!--Improper Operand - "Data Error - Input To Next Operation"-->
+				<ConsequenceType Name="Improper Data Type" Definition="Input To Next Operation">
+					<Consequence Name="Invalid Data"/>
+				</ConsequenceType>
+				<!--Final Error - "Undefined or exploitable system behavior"-->
+				<ConsequenceType Name="Injection Error" Definition="Final Error">
+					<Consequence Name="Query Injection"/>
+					<Consequence Name="Command Injection"/>
+					<Consequence Name="Source Code Injection"/>
+					<Consequence Name="Parameter Injection"/>
+					<Consequence Name="File Injection"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="DVR" Title="Data Verification Bugs" Definition="Data are verified (semantics check) or corrected (assign value, remove) improperly.">
+			<Operations>
+				<Operation Name="Verify"/>
+				<Operation Name="Correct"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Value"/>
+					<Attribute Name="Quantity"/>
+					<Attribute Name="Type"/>
+					<Attribute Name="Other Rules"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="xxx">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+				<AttributeType Name="Execution Space" Definition="xxx">
+					<Attribute Name="Local"/>
+					<Attribute Name="Admin"/>
+					<Attribute Name="Bare-Metal"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Data">
+					<AttributeType Name="State" Definition="xxx">
+						<Attribute Name="Entered"/>
+						<Attribute Name="Stored"/>
+						<Attribute Name="In Use"/>
+						<Attribute Name="Transferred"/>
+					</AttributeType>
+				</Operand>
+				<Operand Name="Policy Data"/>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug is a Coding Error">
+					<Cause Name="Missing"/>
+					<Cause Name="Erroneous"/>
+				</BugCauseType>
+				<BugCauseType Name="Improper Policy" Definition="The Bug is an Algorithm Error">
+					<Cause Name="Under-Restrictive Policy"/>
+					<Cause Name="Over-Restrictive Policy"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Data Type" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Invalid Data"/>
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Data Value" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Value"/>
+					<Consequence Name="Inconsistent Value"/>
+				</ConsequenceType>
+				<ConsequenceType Name="Improper Data Type" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Type"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+	</Classes>
+	<Classes Kind="_DTC" Type="Bug/Weakness" Definition="Range and Domain Violation Bugs">
+		<Class Name="TDD" Title="Type Definition/Declaration Bugs" Definition="A data type is defined improperly or an object is declared with a data type improperly.">
+			<Operations>
+				<Operation Name="Define Data Type"/>
+				<Operation Name="Declare Object"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Standard Type"/>
+					<Attribute Name="User Defined Type"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="xxx">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Data Type">
+					<AttributeType Name="Kind" Definition="xxx">
+						<Attribute Name="Primitive"/>
+						<Attribute Name="Structure"/>
+					</AttributeType>
+				</Operand>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug is a Coding Error">
+					<Cause Name="Wrong"/>
+					<Cause Name="Missing"/>
+				</BugCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Data Type" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Data Type"/>
+					<Consequence Name="Wrong Precision for Type"/>
+					<Consequence Name="Wrong Size for Type"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="TUS" Title="Data Type Use Bugs" Definition="A data type is used improperly.">
+			<Operations>
+				<!--Type Arithmetics-->
+				<Operation Name="Invoke"/>
+				<Operation Name="Slect by Type"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Compound Assignment Operator"/>
+					<Attribute Name="Arithmetics Operator"/>
+					<Attribute Name="Relational Operator"/>
+					<Attribute Name="Logical Operator"/>
+					<Attribute Name="Bitwise Operator"/>
+					<Attribute Name="Pointer Arithmetics (to calculate object size, memory to allocate) – pointer issues"/>
+					<Attribute Name="Pointer Scaling (to calculate position or pointer, memory address) – pointer issues"/>
+					<Attribute Name="Function (e.g. from math libraries)"/>
+					<Attribute Name="Method (for classes)"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="xxx">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Data">
+					<AttributeType Name="Result" Definition="xxx">
+						<Attribute Name="Truncated"/>
+						<Attribute Name="Rounded"/>
+					</AttributeType>
+				</Operand>
+				<Operand Name="Data Type">
+					<AttributeType Name="Issue" Definition="xxx">
+						<Attribute Name="Numeric"/>
+						<Attribute Name="Pointer"/>
+						<Attribute Name="String"/>
+					</AttributeType>
+					<AttributeType Name="Kind" Definition="xxx">
+						<Attribute Name="Primitive"/>
+						<Attribute Name="Structure"/>
+					</AttributeType>					
+				</Operand>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug is a Coding Error">
+					<Cause Name="Wrong"/>
+					<Cause Name="Erroneous"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Data Value" Definition="Domain Violation: A Weakness - Result From Previous Operation">
+					<Cause Name="Wrong Value"/>
+					<Cause Name="Zero (0)"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Data Type" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Wrong Type"/>
+					<Cause Name="Mismatched Type"/>
+					<Cause Name="Wrong Sign Type"/>
+					<Cause Name="Wrong Precision Type"/>
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Data Value" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Value"/>
+					<!--"Wrong Object Size" "Wrong Lower Bound" "Wrong Position" "Wrong Upper Bound"-->
+					<Consequence Name="Range Violation"/>
+				</ConsequenceType>
+				<ConsequenceType Name="Type Use Error" Definition="Final Error">
+					<Consequence Name="Undefined Value"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="TCC" Title="Data Type Conversion Bugs" Definition="Data are converted or casted improperly to another data type.">
+			<Operations>
+				<Operation Name="Convert"/>
+				<Operation Name="Cast"/>
+				<Operation Name="Coerce"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Assignment Operator"/>
+					<Attribute Name="Compound Assignment Operator"/>
+					<Attribute Name="Arithmetics Operator"/>
+					<Attribute Name="Relational Operator"/>
+					<Attribute Name="Logical Operator"/>
+					<Attribute Name="Cast Operator"/>
+					<Attribute Name="Function (e.g. from math libraries)"/>
+					<Attribute Name="Method (for classes)"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="xxx">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Data">
+					<AttributeType Name="Scope" Definition="xxx">
+						<Attribute Name="In"/>
+						<Attribute Name="Out"/>
+					</AttributeType>
+					<AttributeType Name="Damage" Definition="xxx">
+						<Attribute Name="Truncated"/>
+						<Attribute Name="Distorted"/>
+						<Attribute Name="Rounded"/>
+					</AttributeType>
+				</Operand>
+				<AttributeType Name="Kind" Definition="xxx">
+					<Attribute Name="Primitive"/>
+					<Attribute Name="Structure"/>
+				</AttributeType>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug is a Coding Error">
+					<Cause Name="Wrong"/>
+					<Cause Name="Missing"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Data Value" Definition="Domain Violation: A Weakness - Result From Previous Operation">
+					<Cause Name="Over Type Range"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Data Type" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Wrong Type"/>
+					<Cause Name="Mismatched Type"/>
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Data Value" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Value"/>
+				</ConsequenceType>
+				<ConsequenceType Name="Improper Data Type" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Type"/>
+					<Consequence Name="Incompatible Type"/>
+				</ConsequenceType>
+				<ConsequenceType Name="Type Use Error" Definition="Final Error">
+					<Consequence Name="Undefined Value"/>
+				</ConsequenceType>			
+			</Consequences>
+		</Class>
+	</Classes>
+	<Classes Kind="_MEM" Type="Bug/Weakness" Definition="Memory Corruption Bugs">
+		<Class Name="MAD" Title="Memory Addressing Bugs" Definition="The pointer to an object is initialized, repositioned, or reassigned to animproper memory address.">
+			<Operations>
+				<Operation Name="Initialize"/>
+				<Operation Name="Reposition"/>
+				<Operation Name="Reassign"/>
+				<AttributeType Name="Mechanism">
+					<Attribute Name="Direct"/>
+					<Attribute Name="Sequential"/>
+				</AttributeType>
+				<AttributeType Name="Source Code">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+				<AttributeType Name="Execution Space">
+					<Attribute Name="Userland"/>
+					<Attribute Name="Kernel"/>
+					<Attribute Name="Bare-Metal"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Address">
+					<AttributeType Name="Location" Definition="xxx">
+						<Attribute Name="Stack"/>
+						<Attribute Name="Heap"/>
+						<Attribute Name="/other/"/>
+					</AttributeType>
+				</Operand>
+				<!--in MEM paper, the above is operand Object-->
+				<Operand Name="Size"/>
+				<!--in  MEM paper, the above is operand Pointer-->
+				<!--Object - has address and Size1
+					Value
+						Index - is proxy to address, has value and type
+						Size2 - is proxy to Size 1, has value (that becomes Size1) and type
+					Type
+						Index - is proxy to address, has value and type
+						Size2 - is proxy to Size 1, has value (that becomes Size1) and type
+					Address
+						Pointer - property of object ???type???
+					Size1 - property of object
+				//////////////
+				Size1 - requested/actually allocated size - that's now the size of the real object
+				VS 
+				Size2 - needed/what should have been allocated size - that's just a number now-->
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug">
+					<Cause Name="Missing"/>
+					<Cause Name="Mismatched"/>
+					<Cause Name="Erroneous"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Data Value" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Hardcoded Address"/>
+					<Cause Name="Wrong Index"/>
+					<!-- xxx is this only in MAD???-->
+					<Cause Name="Wrong Size Used"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Data Type" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Wrong Index Type"/>
+					<!-- xxx is this only in MAD???-->
+					<Cause Name="Casted Pointer"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Address" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="NULL Pointer"/>
+					<Cause Name="Wild Pointer"/>
+					<Cause Name="Dangling Pointer"/>
+					<Cause Name="Untrusted Pointer"/>
+					<Cause Name="Under Bounds Pointer" Definition="Wrong Position Before/Under Bounds"/>
+					<Cause Name="Wrong Position Pointer" Definition="Wrong Position Inside Bounds"/>
+					<Cause Name="Over Bounds Pointer" Definition="Wrong Position After/Over Bounds"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Size" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Not Enough Allocated"/>
+					<!--Size1-->
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Data Value" Definition="Input To Next Operation">
+					<Consequence Name="Forbidden Address"/>
+				</ConsequenceType>
+				<ConsequenceType Name="Improper Data Type" Definition="Input To Next Operation">
+					<Consequence Name="Casted Pointer"/>
+				</ConsequenceType>
+				<ConsequenceType Name="Improper Address" Definition="Input To Next Operation">
+					<Consequence Name="NULL Pointer"/>
+					<Consequence Name="Wild Pointer"/>
+					<Consequence Name="Dangling Pointer"/>
+					<Consequence Name="Untrusted Pointer"/>
+					<Consequence Name="Under Bounds Pointer"/>
+					<Consequence Name="Wrong Position Pointer"/>
+					<Consequence Name="Over Bounds Pointer"/>
+				</ConsequenceType>			
+			</Consequences>
+		</Class>
+		<Class Name="MAL" Title="Memory Allocation Bugs" Definition="An object is allocated, extended, or reallocated (while extending) improperly.">
+			<Operations>
+				<Operation Name="Allocate"/>
+				<Operation Name="Extend"/>
+				<Operation Name="Reallocate-Extend"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Implicit"/>
+					<Attribute Name="Explicit"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="xxx">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+				<AttributeType Name="Execution Space" Definition="xxx">
+					<Attribute Name="Userland"/>
+					<Attribute Name="Kernel"/>
+					<Attribute Name="Bare-Metal"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Address">
+					<AttributeType Name="Ownership" Definition="xxx">
+						<Attribute Name="None"/>
+						<Attribute Name="Single"/>
+						<Attribute Name="Shared"/>
+					</AttributeType>
+					<AttributeType Name="Location" Definition="xxx">
+						<Attribute Name="Stack"/>
+						<Attribute Name="Heap"/>
+						<Attribute Name="/other/"/>
+					</AttributeType>
+				</Operand>
+				<Operand Name="Size"/>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug">
+					<Cause Name="Missing"/>
+					<Cause Name="Mismatched"/>
+					<Cause Name="Erroneous"/>
+				</BugCauseType>
+
+				<WeaknessCauseType Name="Improper Data Value" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Hardcoded Address"/>
+					<Cause Name="Forbidden Address"/>
+					<Cause Name="Address of Single Owned Object"/>
+					<Cause Name="Wrong Size Used"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Address" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Wild Pointer"/>
+					<Cause Name="Dangling Pointer"/>
+					<Cause Name="Wrong Position Pointer"/>
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Address" Definition="Input To Next Operation">
+					<Consequence Name="NULL Pointer"/>
+					<Consequence Name="Wild Pointer"/>
+				</ConsequenceType>
+				<ConsequenceType Name="Improper Size" Definition="Input To Next Operation">
+					<Consequence Name="Not Enough Allocated"/>
+					<!--xxx Wrong Size Memory Allocated - not enough; too much-->
+					<!--xxx Too Much Memory Allocated ?-->
+				</ConsequenceType>
+				<ConsequenceType Name="Memory Error" Definition="Final Error">
+					<Consequence Name="Memory Overflow"/>
+					<Consequence Name="Memory Leak"/>
+					<Consequence Name="Double Free"/>
+					<Consequence Name="Object Corruption"/>
+				</ConsequenceType>			
+			</Consequences>
+		</Class>
+		<Class Name="MUS" Title="Memory Use Bugs" Definition="An object is initialized, read, written, or cleared improperly.">
+			<Operations>
+				<Operation Name="Initialize"/>
+				<Operation Name="Dereference"/>
+				<Operation Name="Read"/>
+				<Operation Name="Write"/>
+				<Operation Name="Clear"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Direct"/>
+					<Attribute Name="Sequential"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="xxx">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+				<AttributeType Name="Execution Space" Definition="xxx">
+					<Attribute Name="Userland"/>
+					<Attribute Name="Kernel"/>
+					<Attribute Name="Bare-Metal"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Address">
+					<AttributeType Name="Span" Definition="xxx">
+						<Attribute Name="Litle"/>
+						<Attribute Name="Moderate"/>
+						<Attribute Name="Huge"/>
+					</AttributeType>
+					<AttributeType Name="Location" Definition="xxx">
+						<Attribute Name="Stack"/>
+						<Attribute Name="Heap"/>
+						<Attribute Name="/other/"/>
+					</AttributeType>
+				</Operand>
+				<Operand Name="Size"/>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug">
+					<Cause Name="Missing"/>
+					<Cause Name="Mismatched"/>
+					<Cause Name="Erroneous"/>
+				</BugCauseType>
+
+				<WeaknessCauseType Name="Improper Data Value" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Forbidden Address"/>
+					<Cause Name="Wrong Size Used"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Data Type" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Casted Pointer"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Address" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="NULL Pointer"/>
+					<Cause Name="Wild Pointer"/>
+					<Cause Name="Dangling Pointer"/>
+					<Cause Name="Untrusted Pointer"/>
+					<Cause Name="Under Bounds Pointer"/>
+					<Cause Name="Wrong Position Pointer"/>
+					<Cause Name="Over Bounds Pointer"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Size" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Not Enough Allocated"/>
+					<!--xxx Wrong Size Memory Allocated - not enough; too much-->
+					<!--xxx Too Much Memory Allocated ?-->
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Memory Error" Definition="Final Error">
+					<Consequence Name="Uninitialized Object"/>
+					<Consequence Name="Not Cleared Object"/>
+					<Consequence Name="NULL Pointer Dereference"/>
+					<Consequence Name="Untrusted Pointer Dereference"/>
+					<Consequence Name="Object Corruption"/>
+					<Consequence Name="Type Confusion"/>
+					<Consequence Name="Use After Free"/>
+					<Consequence Name="Buffer Overflow"/>
+					<Consequence Name="Buffer Underflow"/>
+					<Consequence Name="Uninitialized Pointer Dereference"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="MDL" Title="Memory Deallocation Bugs" Definition="An object is deallocated, reduced, or reallocated (while reducing) improperly.">
+			<Operations>
+				<Operation Name="Deallocate"/>
+				<Operation Name="Reduce"/>
+				<Operation Name="Reallocate-Reduce"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Implicit"/>
+					<Attribute Name="Explicit"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="xxx">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+				<AttributeType Name="Execution Space" Definition="xxx">
+					<Attribute Name="Userland"/>
+					<Attribute Name="Kernel"/>
+					<Attribute Name="Bare-Metal"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Address">
+					<AttributeType Name="Ownership" Definition="xxx">
+						<Attribute Name="None"/>
+						<Attribute Name="Single"/>
+						<Attribute Name="Shared"/>
+					</AttributeType>
+					<AttributeType Name="Location" Definition="xxx">
+						<Attribute Name="Stack"/>
+						<Attribute Name="Heap"/>
+						<Attribute Name="/other/"/>
+					</AttributeType>
+				</Operand>
+				<Operand Name="Size"/>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug">
+					<Cause Name="Missing"/>
+					<Cause Name="Mismatched"/>
+					<Cause Name="Erroneous"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Data Value" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Hardcoded Address"/>
+					<Cause Name="Forbidden Address"/>
+					<Cause Name="Wrong Size Used"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Address" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Wild Pointer"/>
+					<Cause Name="Dangling Pointer"/>
+					<Cause Name="Wrong Position Pointer"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Size" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Not Enough Allocated"/>
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Address" Definition="A Weakness - Result From Previous Operation">
+					<Consequence Name="NULL Pointer"/>
+				</ConsequenceType>
+				<ConsequenceType Name="Improper Size" Definition="A Weakness - Result From Previous Operation">
+					<Consequence Name="Not Enough Allocated"/>
+				</ConsequenceType>
+				<ConsequenceType Name="Memory Error" Definition="Final Error">
+					<Consequence Name="Memory Leak"/>
+					<Consequence Name="Double Free"/>
+					<Consequence Name="Object Corruption"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+	</Classes>
+	<Classes Kind="_CRY" Type="Bug/Weakness" Definition="Cryptographic Store or Transfer Bugs">
+		<Class Name="ENC" Title="Encryption Bugs" Definition="Sensitive data (plaintext) are improperly transformed into unintelligible form (ciphertext) using a cryptographic algorithm and key(s).">
+			<Operations>
+				<Operation Name="Encrypt"/>
+				<Operation Name="Decrypt"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="xxx"/>
+					<Attribute Name="xxx"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="xxx">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+				<AttributeType Name="Execution Space" Definition="xxx">
+					<Attribute Name="Userland"/>
+					<Attribute Name="Kernel"/>
+					<Attribute Name="Bare-Metal"/>
+				</AttributeType>
+				<AttributeType Name="Algorithm" Definition="xxx">
+					<Attribute Name="Symmetric Encryption"/>
+					<Attribute Name="Asymmetric Encryption"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Data">
+					<AttributeType Name="Sensitive Data" Definition="xxx">
+						<Attribute Name="Secret"/>
+						<Attribute Name="Public"/>
+					</AttributeType>
+					<AttributeType Name="State" Definition="xxx">
+						<Attribute Name="Stored"/>
+						<!--<Attribute Name="In Use"/> IB: Shoulf we add this?-->
+						<Attribute Name="Transferred"/>
+					</AttributeType>
+				</Operand>
+				<Operand Name="Key(s)">
+					<AttributeType Name="Type" Definition="xxx">
+						<Attribute Name="Private Key"/>
+						<Attribute Name="Secrete Key"/>
+						<Attribute Name="Shared Key"/>
+						<Attribute Name="Public Key"/> <!--xxx ???-->
+					</AttributeType>
+				</Operand>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug">
+					<Cause Name="Missing"/>
+					<Cause Name="Erroneous"/>
+				</BugCauseType>
+				<BugCauseType Name="Improper Algorithm" Definition="The Bug">
+					<Cause Name="Modified Algorithm"/>
+					<!--removed/changes/added step-->
+					<Cause Name="Inadequate Algorithm"/>
+					<Cause Name="Weak Algorithm"/> <!-- including "Insecure Mode of Operation" - we have it as "leading to weak algorithm" on the old graph, but is it?!-->
+					<Cause Name="Risky/Broken Algorithm"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Key" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Known Key"/>
+					<!--<Cause Name="Exposed Key"/>-->
+					<!-- these have to be conseqeunces from IEX failure form a previous Vulnerability-->
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Key" Definition="xxx">
+					<Consequence Name="Known Key"/>	<!-- for KMN-->
+					<Consequence Name="Known Random Number"/> <!-- for KMN-->
+				</ConsequenceType>
+				<ConsequenceType Name="Scurity Error" Definition="Final Error">
+					<!--leads to IEX-->
+					<Consequence Name="Confidentiality Error"/> <!-- leads to IEX of Data-->
+					<Consequence Name="~Integrity Error"/> <!--in some modes of encryption-->
+					<Consequence Name="~Identity Authentication Error"/> <!--in some modes of encryption-->
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="VRF" Title="Verification Bugs" Definition="Data is signed, source is checked and proved, or data is assured to be unaltered improperly.">
+			<Operations>
+				<Operation Name="Sign"/>
+				<Operation Name="Verify Signiture"/>
+				<!-- Verify is oeration of DVR; here the operation is specific for _CRY "Verify Signitire"-->
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="xxx"/>
+					<Attribute Name="xxx"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="xxx">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+				<AttributeType Name="Execution Space" Definition="xxx">
+					<Attribute Name="Userland"/>
+					<Attribute Name="Kernel"/>
+					<Attribute Name="Bare-Metal"/>
+				</AttributeType>
+				<AttributeType Name="Algorithm" Definition="xxx">
+					<Attribute Name="Hash Function + PRN"/>
+					<Attribute Name="MAC" Definition="Message Authentication Code"/>
+					<Attribute Name="Digital Signature"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Data">
+					<AttributeType Name="Sensitive Data" Definition="xxx">
+						<Attribute Name="Credentials"/>
+						<Attribute Name="System Data"/>
+						<Attribute Name="State Data"/>
+						<Attribute Name="Cryptographic Data"/>
+						<Attribute Name="Digital Documents"/>
+					</AttributeType>
+					<AttributeType Name="State" Definition="xxx">
+						<Attribute Name="Stored"/>
+						<!--<Attribute Name="In Use"/> IB: Shoulf we add this?-->
+						<Attribute Name="Transferred"/>
+					</AttributeType>
+				</Operand>
+				<Operand Name="Key(s)">
+					<AttributeType Name="Type" Definition="xxx">
+						<Attribute Name="Private Key"/>
+						<Attribute Name="Secrete Key"/>
+						<Attribute Name="Public Key"/><!--xxx ???-->
+					</AttributeType>
+				</Operand>
+				<Operand Name="Random Number">
+					<Attribute Name="True Random Number"/>
+					<Attribute Name="Pseudo Random Number"/>
+				</Operand>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug">
+					<Cause Name="Missing"/>
+					<Cause Name="Erroneous"/>
+				</BugCauseType>
+				<BugCauseType Name="Improper Algorithm" Definition="The Bug">
+					<Cause Name="Modified Algorithm"/>
+					<Cause Name="Inadequate Algorithm"/>
+					<Cause Name="Weak Algorithm"/>
+					<Cause Name="Risky/Broken Algorithm"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Key" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Weak Key"/>
+					<Cause Name="Known Key"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Random Number" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Inadequate Random Number"/>
+					<Cause Name="Predictable Random Number"/>
+					<Cause Name="Known Random Number"/>
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Key" Definition="xxx">
+					<Consequence Name="Unverified Key"/>
+				</ConsequenceType>
+				<ConsequenceType Name="Scurity Error" Definition="Final Error">
+					<!--leads to IEX-->
+					<Consequence Name="Integrity Authentication Error" Definition="Unverified Data"/>
+					<Consequence Name="Identity Authentication Error" Definition="Unverified Identity"/>
+					<Consequence Name="Origin Non-Repudiation Error" Definition="Unverified Origin Origin (Signer)"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="KMN" Title="Key Management Bugs" Definition="Cryptographic keys and other keying material are generated, stored, distributed, used, or destroyed improperly.">
+			<Operations>
+				<Operation Name="Generate/Select"/>
+				<Operation Name="Store"/>
+				<Operation Name="Distribute"/>
+				<Operation Name="Use"/>
+				<Operation Name="Destroy"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="xxx"/>
+					<Attribute Name="xxx"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="xxx">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+				</AttributeType>
+				<AttributeType Name="Execution Space" Definition="xxx">
+					<Attribute Name="Userland"/>
+					<Attribute Name="Kernel"/>
+					<Attribute Name="Bare-Metal"/>
+				</AttributeType>
+				<AttributeType Name="Algorithm" Definition="xxx">
+					<Attribute Name="Hash Function + PRN"/>
+					<Attribute Name="MAC" Definition="Message Authentication Code"/>
+					<Attribute Name="RSA" Definition="Rivest–Shamir–Adleman"/>
+					<Attribute Name="Digital Signature"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Data">
+					<AttributeType Name="Cryptographic Data" Definition="xxx">
+						<Attribute Name="Hashes"/>
+						<Attribute Name="Keying Material"/>
+						<Attribute Name="Digital Certificate"/>
+					</AttributeType>
+					<AttributeType Name="State" Definition="xxx">
+						<Attribute Name="Stored"/>
+						<!--<Attribute Name="In Use"/> IB: Shoulf we add this?-->
+						<Attribute Name="Transferred"/>
+					</AttributeType>
+				</Operand>
+				<Operand Name="Key(s)">
+					<AttributeType Name="Type" Definition="xxx">
+						<Attribute Name="Private Key"/>
+						<Attribute Name="Secrete Key"/>
+						<Attribute Name="Shared Key"/>
+						<Attribute Name="Public Key"/> <!--xxx ???-->
+					</AttributeType>
+				</Operand>
+				<Operand Name="Random Number">
+					<Attribute Name="True Random Number"/>
+					<Attribute Name="Pseudo Random Number"/>
+				</Operand>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug">
+					<Cause Name="Missing"/>
+					<Cause Name="Erroneous"/>
+				</BugCauseType>
+				<BugCauseType Name="Improper Algorithm" Definition="The Bug">
+					<Cause Name="Modified Algorithm"/>
+					<Cause Name="Inadequate Algorithm"/>
+					<Cause Name="Weak Algorithm"/>
+					<Cause Name="Risky/Broken Algorithm"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Key" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Weak Key"/>
+					<Cause Name="Known Key"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Random Number" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Inadequate Random Number"/>
+					<Cause Name="Predictable Random Number"/>
+					<Cause Name="Known Random Number"/>
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Key" Definition="xxx">
+					<Consequence Name="Weak Public Key"/>
+					<!-- ENC algorithm - Known Private Key-->
+					<Consequence Name="Weak Secret Key"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+	</Classes>
+	<Classes Kind="_RND" Type="Bug/Weakness" Definition="Random Number Generation Bugs">
+		<Class Name="TRN" Title="xxx" Definition="xxx">
+			<Operands>
+				<Operand Name="xxx"/>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug">
+					<Cause Name="xxx"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Data Value" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="xxx"/>
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Data Type" Definition="xxx">
+					<Consequence Name="xxx"/>
+				</ConsequenceType>
+				<ConsequenceType Name="xxx Error" Definition="Final Error">
+					<Consequence Name="xxx Error"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="PRN" Title="xxx" Definition="xxx">
+			<Operands>
+				<Operand Name="xxx"/>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Code" Definition="The Bug">
+					<Cause Name="xxx"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Data Value" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="xxx"/>
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="Improper Data Type" Definition="xxx">
+					<Consequence Name="xxx"/>
+				</ConsequenceType>
+				<ConsequenceType Name="xxx Error" Definition="Final Error">
+					<Consequence Name="xxx Error"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+	</Classes>
+
+	<Classes Kind="_FLR" Type="Failure" Definition="">
+		<Class Name="IEX" Title="Information Exposure" Definition="Information Exposure">
+			<Operations>
+				<Operation Name="IEX Operation"/>
+			</Operations>
+			<!-- Failure causes are the Final Error conseqeunces from previous weaknesses. -->
+			<Causes>
+				<FailureCauseType Name="Memory Error" Definition="xxx">
+					<Cause Name="Buffer Overflow"/>
+					<Cause Name="Buffer Underflow"/>
+				</FailureCauseType>
+			</Causes>
+			<!-- Conseqeunces are the risks. -->
+			<Consequences>
+				<ConsequenceType Name="xxx" Definition="ddd">
+					<Consequence Name="IEX Conseqeunce"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="RCE" Title="Remote Code Execution" Definition="Remote Code Execution">
+			<Operations>
+				<Operation Name="RCE Operation"/>
+			</Operations>
+			<Causes>
+				<FailureCauseType Name="xxx" Definition="xxx">
+					<Cause Name="RCE Cause"/>
+				</FailureCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="xxx" Definition="ddd">
+					<Consequence Name="RCE Conseqeunce"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="DOS" Title="Denial of Service" Definition="Denial of Service">
+			<Operations>
+				<Operation Name="DOS Operation"/>
+			</Operations>
+			<Causes>
+				<FailureCauseType Name="xxx" Definition="xxx">
+					<Cause Name="DOS Cause"/>
+				</FailureCauseType>
+			</Causes>
+			<Consequences>
+				<ConsequenceType Name="xxx" Definition="ddd">
+					<Consequence Name="DOS Conseqeunce"/>
+				</ConsequenceType>
+			</Consequences>
+		</Class>
+	</Classes>
+
+	<!--Tooltips-->
+	<Definitions>
+		<!--MAD Operations-->
+		<Definition Name="Initialize (pointer)">The first  assign  of  an  object  address  to  a  pointer; positions  the  pointer  at  the  start  of  the  object.</Definition>
+		<Definition Name="Reposition">Changes the pointer to another position inside  its  object.</Definition>
+		<Definition Name="Reassign">Changes the  pointer  to  a  different  object.</Definition>
+		<!--MAL Operations-->
+		<Definition Name="Allocate">Reserves space in memory for an object; defines its initial boundaries and size.</Definition>
+		<Definition Name="Extend">Allocates additional memory for an object in the same space; redefines its boundaries and size.</Definition>
+		<Definition Name="Reallocate–Extend">Allocates a new larger piece of memory for an object at a new address, copies the object content there, reassigns its pointer, and deallocates the previous piece of memory.</Definition>
+		<!--MUS Operations-->
+		<Definition Name="Initialize">(object) The first write into an object, after it is allocated.</Definition>
+		<Definition Name="Read">Gets content from an object.</Definition>
+		<Definition Name="Write">Puts content into an object.</Definition>
+		<Definition Name="Clear">The very last write into an object, before it is deallocated.</Definition>
+		<Definition Name="Dereference">Overreaches Initialize, Read, Write, and Clear, focus is on object access, no matter if it’s for reading or for writing</Definition>
+		<!--MDL Operations-->
+		<Definition Name="Deallocate">Releases the allocated memory of an object.</Definition>
+		<Definition Name="Reduce">Deallocates part of the object memory; redefines its boundaries and size.</Definition>
+		<Definition Name="Reallocate–Reduce">Allocates a new smaller space in memory for an object at a new address, copies part of the object content there, reassigns the pointer, and deallocates the previous piece of memory.</Definition>
+		<!--DVL Operations-->
+		<Definition Name="Validate">Check data syntax (proper form/grammar) in order to accept (and possibly sanitize) or reject it. Includes checking for missing symbols/elements.</Definition>
+		<Definition Name="Sanitize">Modify data (neutralize/escape, filter/remove, repair/add symbols) in order to make it valid (well-formed).</Definition>
+		<!--DVR Operations-->
+		<Definition Name="Verify">Check data semantics (proper value/meaning) in order to accept (and possibly correct) or reject it.</Definition>
+		<Definition Name="Correct">Modify data (assign new value, remove), in order to make it accurate.</Definition>
+		<!--Operands-->
+		<!--Need to update - see DTC slides-->
+		<Definition Name="Object">A memory region used to store data. %The data could be a primitive data, such as integer or boolean; or a data structure, such as array, record, or OOP Object.</Definition>
+		<Definition Name="Pointer">A holder of the memory address of an object.</Definition>
+		<Definition Name="Data">A string of characters (symbols like letter, digit, punctuation) with clearly defined syntax and semantics.</Definition>
+		<!--CG: It is kind of the policy is operand and we also have policy on operations.-->
+		<Definition Name="Policy">Lists or rules for checking data syntax and semantics. For example, safelist, denylist, format (e.g., DTD-XML Document Type Definition), and length; or value (incl. NULL or list of values), quantity, range, and type (e.g., a PowerPoint XSD).</Definition>
+		<!--General Improper Operations-->
+		<Definition Name="Missing">The operation is absent.</Definition>
+		<Definition Name="Erroneous">There’s a bug in the operation implementation.</Definition>
+		<!--Kind (cluster) specific improper operations-->
+		<Definition Name="Mismatched">The deallocation function does not match the allocation function used for the same object.</Definition>
+		<Definition Name="Under-Restrictive Policy">Accepts bad data.</Definition>
+		<Definition Name="Over-Restrictive Policy">Rejects good data.</Definition>
+		<!--Improper Operands-->
+		<!--Improper Address/Pointer-->
+		<Definition Name="NULL Pointer">Points to the zero address, a specific invalid address.</Definition>
+		<Definition Name="Wild Pointer">Points to an arbitrary address, because it has not been initialized or an erroneous allocation routine is used.</Definition>
+		<Definition Name="Dangling Pointer">Still points to the address of its successfully deallocated object.</Definition>
+		<Definition Name="Over Bounds Pointer">Points over the bounds of its object.</Definition>
+		<Definition Name="Under Bounds Pointer">Points under the bounds of its object.</Definition>
+		<Definition Name="Untrusted Pointer">The pointer is modified to an improperly checked address.</Definition>
+		<Definition Name="Wrong Position Pointer">Points to a miscalculated position inside object bounds.</Definition>
+		<Definition Name="Forbidden Address">The pointer points to an OS protected or non-existing address.</Definition>
+		<Definition Name="Address of Single Owned Object">The only pointer of an already allocated object is used to allocate a new object.</Definition>
+		<!--IB: was--><Definition Name="Single Owner of Object"></Definition>
+		<Definition Name="Hardcoded Address">The pointer points a wrong specific address.</Definition>
+		<!--Improper Size/Object-->
+		<Definition Name="Not Enough Allocated">The allocated memory is too little for the data it should store.</Definition>
+		<!--IB: new suggestion: Not Enough Memory Allocated???-->
+		<!--Improper Type-->
+		<Definition Name="Casted Pointer">The pointer does not match the type of the object, due to wrong type casting.</Definition>
+		<Definition Name="Wrong Type">Data with wrong data type.</Definition>
+		<!--Improper Values-->
+		<Definition Name="Wrong Size Used">Used The value used as size does not match the real size of the object.</Definition>
+		<Definition Name="Corrupted Data">Unintentionally modified data due to a previous weakness (e.g., with a decompress or a decrypt operation) that if not sanitized would end-up as invalid data for next weakness.</Definition>
+		<Definition Name="Tampered Data">Maliciously modified data due to a previous weakness (e.g., with a deserialize, authorize, or crypto verify operation) that would lead to injection error.</Definition>
+		<Definition Name="Invalid Data">Data with harmed syntax due to sanitization errors.</Definition>
+		<Definition Name="Wrong Value">Data with harmed semantics; not accurate value (e.g., outside of a range).</Definition>
+		<Definition Name="Inconsistent Value">Data value is inconsistent with the value of a related data (e.g., inconstancy between the value of a size variable and the actual buffer size).</Definition>
+		<!-- IB: Wrong Indes, Wrong Index Type-->
+		<!--Improper Rules-->
+		<Definition Name="Corrupted Policy">Unintentionally modified policy due to a previous weakness (e.g., with a decompress operation).</Definition>
+		<Definition Name="Tampered Policy">Maliciously modified policy due to a previous weakness (e.g., with an authorize operation).</Definition>
+		<!--_MEM Final Errors-->
+		<!--CG: We need to straight up the definitions here. Some are defined as actions (Null pointer dereference) others as things(Type confusion). I think all of them should be defined as action/attempts-->
+		<Definition Name="Memory Overflow">More memory requested than available. Risk: Stack/heap exhaustion.</Definition>
+		<Definition Name="Memory Leak">An object has no pointer pointing to it. Risk: Resource exhaustion.Application crash. DoS.</Definition>
+		<Definition Name="Double Free">Attempt to deallocate a deallocated object or via an uninitialized pointer. Risk: Arbitrary code execution.</Definition>
+		<Definition Name="Object Corruption">Object data is unintentionally altered. Wrong/unexpected results.</Definition>
+		<Definition Name="Uninitialized Object">Object data is not filled inbefore use. Controlled or left over data.</Definition>
+		<Definition Name="Not Cleared Object">Object data not overwritten before deallocation. Information exposure (e.g. private keys).</Definition>
+		<Definition Name="NULL Pointer Dereference"> Attempt to access an object for read or write through a NULL pointer. Program crash. Arbitrary code execution (in some OSs).</Definition>
+		<Definition Name="Untrusted Pointer Dereference"> Attempt to access an object via an altered pointer (not legitimate dereference of tainted pointers).DoS. Arbitrary code execution.</Definition>
+		<Definition Name="Type Confusion">Pointer and object have different types.  Vtable corruption. Hijack.</Definition>
+		<Definition Name="Use After Free">Attempt to use a deallocated object. Arbitrary code execution.</Definition>
+		<Definition Name="Buffer Overflow">Read or write above the object upper bound. Arbitrary code execution. Information exposure."</Definition>
+		<Definition Name="Buffer Underflow">Read or write below the object lower bounds. Arbitrary code execution. Information exposure.</Definition>
+		<Definition Name="Uninitialized Pointer Dereference"> An attempt to access an object for read or write via an uninitialized pointer. Control flow hijack.</Definition>
+		<!--_INP:Final Errors-->
+		<!--CG: Should we put examples in the definition?-->
+		<Definition Name="Query Injection">Malicious insertion of condition parts (e.g., or 1==1) or entire commands (e.g., drop table) into an input used to construct a database query.</Definition>
+		<Definition Name="Command Injection">Malicious insertion of new commands into the input to a command that is sent to an operating system (OS) or to a server.</Definition>
+		<Definition Name="Source Code Injection">Injection Malicious insertion of new code (incl. with &lt; &gt; elements) into input used as part of an executing application code.</Definition>
+		<Definition Name="Parameter Injection">Malicious insertion of data (e.g., with &amp; parameter separator) into input used as parameter/ argument in other parts of code.</Definition>
+		<Definition Name="File Injection">Malicious insertion of data (e.g., with .. and / or with file entries) into input used to access/ modify files or as file content.</Definition>
+		<!--Attributes-->
+		<Definition Name="Source Code">Where is the operation in the program.</Definition>
+		<Definition Name="Codebase">The operation is in programmer's code -- in the application itself.</Definition>
+		<!--<Definition Name="Third Party">The operation is in a third party library.</Definition>
+		<Definition Name="Standard Library">The operation is in the standard library for a particular programming language.</Definition>-->
+		<Definition Name="Code Library">The operation is in a third party library or in the standard library for a particular programming language.</Definition>
+		<Definition Name="Compiler/Interpretor">The operation is in the tool that allows execution or creates executable (compiler, assembler, interpreter).</Definition>
+		<Definition Name="Execution Space">Where the code is running.</Definition>
+		<Definition Name="Userland">The bugged code runs in an environment with privilege levels, but in unprivileged mode (e.g., ring 3 in x86 architecture).</Definition>
+		<Definition Name="Kernel">The bugged code runs in an environment with privilege levels with access privileged instructions (e.g., ring 0 in x86 architecture).</Definition>
+		<Definition Name="Local">xxx.</Definition>
+		<Definition Name="Admin">xxx.</Definition>
+		<Definition Name="Bare-Metal">The bugged code runs in an environment without privilege control. Usually, the program is the only software running and has total access to the hardware.</Definition>
+		<Definition Name="Location">Where the object is stored in memory.</Definition>
+		<Definition Name="Stack">The object is a non-static local variable (defined in a function, a passed parameters, or a function return address).</Definition>
+		<Definition Name="Heap">The object is a dynamically allocated data structure (e.g., via malloc() and new).</Definition>
+		<Definition Name="State">Where the data come from.</Definition>
+		<Definition Name="Entered">Data comes from user interface (e.g., text field).</Definition>
+		<Definition Name="Stored">Data comes from permanent storage (e.g., file,database on a storage device).</Definition>
+		<Definition Name="In Use">Data comes from volatile storage (e.g., RAM, cache memory).</Definition>
+		<Definition Name="Transferred">Data comes via network (e.g., connecting analog device or another computer).</Definition>
+		<Definition Name="Mechanism">xxx</Definition>
+		<!--_MEM Mechanism-->
+		<Definition Name="Direct">The operation is performed over a particular object element.</Definition>
+		<Definition Name="Sequential">The operation is performed after iterating over the object elements.</Definition>
+		<Definition Name="Implicit">The operation is performed without a function call.</Definition>
+		<Definition Name="Explicit">The operation is performed by a function/ method) call.</Definition>
+		<!--_INP Mechanism-->
+		<!--Should we keep the examples in parenthesis?-->
+		<Definition Name="Safelist">Policy based on a set of known good content.</Definition>
+		<Definition Name="Denylist">Policy based on a set of known bad content; helps reject outright maliciously malformed data.</Definition>
+		<Definition Name="Format">Policy based on syntax format (e.g., defined via regular expression).</Definition>
+		<Definition Name="Length">Policy based on allowed number of characters in data. Note that this is not about the data value as size of an object.</Definition>
+		<!--Be careful - we have a value named Value and a value named Type, which could be confusioning.-->
+		<Definition Name="Value">Check data for a specific value ( incl. NULL or list of values).</Definition>
+		<Definition Name="Quantity">Check data for a specific measurable value (e.g., size, time, rate, frequency).</Definition>
+		<Definition Name="Range">Check data are within a (min, max) interval.</Definition>
+		<Definition Name="Type">Check data type (e.g., int, float, XSD-XML Schema Definition, or specific structure/object).</Definition>
+		<Definition Name="Other Rules">Check data against other business logic.</Definition>
+		<Definition Name="Ownership">Shows how many pointers point to an object.</Definition>
+		<Definition Name="None">The object has no owner.</Definition>
+		<Definition Name="Single">The object has one owner.</Definition>
+		<Definition Name="Shared">The object has more than one owner.</Definition>
+		<Definition Name="Span">Shows how many bytes are being used.</Definition>
+		<Definition Name="Little">A few bytes of memory are accessed.</Definition>
+		<Definition Name="Moderate">Several bytes of memory are accessed, but less than 1 KB.</Definition>
+		<Definition Name="Huge">More than 1 KB of memory is accessed.</Definition>
+		<!--Common Terms - xxx can use them as tooltips for labels-->
+		<Definition Name="Vulnerability">xxx</Definition>
+		<Definition Name="Bug">A coding error that needs to be fixed.</Definition>
+		<!--<Definition Name="Weakness">Improper operand that is result from the Operation of a Previous Bug/Weakness.</Definition>-->
+		<Definition Name="Final Error">Undefined or exploitable system behavior.</Definition>
+		<Definition Name="Failure">A violation of a system security requirement.</Definition>
+		<Definition Name="BF Class">xxx</Definition>
+		<Definition Name="Cause">xxx</Definition>
+		<Definition Name="Consequence">xxx</Definition>
+	</Definitions>
+
+</BF>
