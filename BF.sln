@@ -9,12 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugsFramework", "BugsFramew
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VulnerabilityDescription", "VulnerabilityDescription\VulnerabilityDescription.csproj", "{312F0DFF-6CAE-4112-ABB9-1BA405F61DED}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vulnerabilities Descriptions", "Vulnerabilities Descriptions", "{D7DD806C-ED57-4AB3-92F8-237977E87B93}"
-	ProjectSection(SolutionItems) = preProject
-		CVE-2014-0160 - Heartbleed Buffer Overflow.bf = CVE-2014-0160 - Heartbleed Buffer Overflow.bf
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VulnerabilityEditor", "VulnerabilityEditor\VulnerabilityEditor.csproj", "{D77BF94E-3AD7-43A8-A55D-C5A2B49E7277}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VulnerabilityEditor", "VulnerabilityEditor\VulnerabilityEditor.csproj", "{D77BF94E-3AD7-43A8-A55D-C5A2B49E7277}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,9 +32,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{D7DD806C-ED57-4AB3-92F8-237977E87B93} = {960D1ECE-2437-4D69-BC9C-A2EB66026679}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA0D0C1C-3769-4311-AC54-D316550009F4}
