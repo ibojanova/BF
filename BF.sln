@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{960D1ECE-2437-4D69-BC9C-A2EB66026679}"
+	ProjectSection(SolutionItems) = preProject
+		CVE-2014-0160 - Heartbleed Buffer Overflow.bf = CVE-2014-0160 - Heartbleed Buffer Overflow.bf
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugsFramework", "BugsFramework\BugsFramework.csproj", "{399C1E8E-2047-4CF0-8423-7537ABD4F809}"
 EndProject
