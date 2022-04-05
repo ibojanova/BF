@@ -5,12 +5,12 @@
 	<xs:element name="BF">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Classes" minOccurs="1" maxOccurs="unbounded">
+				<xs:element name="Cluster" minOccurs="1" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element ref="Class" minOccurs="1" maxOccurs="unbounded"/>
 						</xs:sequence>
-						<xs:attribute name="Kind" type="xs:string" use="required" />
+						<xs:attribute name="Name" type="xs:string" use="required" />
 						<xs:attribute name="Type" type="xs:string" use="required" />
 						<xs:attribute name="Definition" type="xs:string" use="required" />
 					</xs:complexType>

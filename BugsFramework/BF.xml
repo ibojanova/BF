@@ -6,23 +6,24 @@
 has value and type - we use this level to connect the classes-->
 
 <BF Name="Bugs Framework">
-	<Classes Kind="_INP" Type="Bug/Weakness" Definition="Input/Output Check Bugs (with Injection as Final Error)">
+	<Cluster Name="_INP" Type="Bug/Weakness" Definition="Input/Output Check Bugs (with Injection as Final Error)">
 		<Class Name="DVL" Title="Data Validation Bugs" Definition="Data are validated (syntax check) or sanitized (escape, filter, repair) improperly.">
 			<Operations>
 				<Operation Name="Validate"/>
 				<Operation Name="Sanitize"/>
-				<AttributeType Name="Mechanism" Definition="xxx">
+				<AttributeType Name="Mechanism" Definition="The specific policy used by the operation.">
 					<Attribute Name="Safelist"/>
 					<Attribute Name="Denylist"/>
 					<Attribute Name="Format"/>
 					<Attribute Name="Length"/>
 				</AttributeType>
-				<AttributeType Name="Source Code" Definition="xxx">
+				<!--The operation attributes Source Code and Execution Space explain where a bug is – where the operation is in the program and where its code runs.-->
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
-				<AttributeType Name="Execution Space" Definition="xxx">
+				<AttributeType Name="Execution Space" Definition="Shows where the program code runs.">
 					<Attribute Name="Local"/>
 					<Attribute Name="Admin"/>
 					<Attribute Name="Bare-Metal"/>
@@ -30,7 +31,7 @@ has value and type - we use this level to connect the classes-->
 			</Operations>
 			<Operands>
 				<Operand Name="Data" Definition="The data writtten in the object memory.">
-					<AttributeType Name="State" Definition="xxx">
+					<AttributeType Name="State" Definition="Shows where the data come from.">
 						<Attribute Name="Entered"/>
 						<Attribute Name="Stored"/>
 						<Attribute Name="In Use"/>
@@ -78,18 +79,18 @@ has value and type - we use this level to connect the classes-->
 			<Operations>
 				<Operation Name="Verify"/>
 				<Operation Name="Correct"/>
-				<AttributeType Name="Mechanism" Definition="xxx">
+				<AttributeType Name="Mechanism" Definition="The specific policy used by the operation.">
 					<Attribute Name="Value"/>
 					<Attribute Name="Quantity"/>
 					<Attribute Name="Type"/>
 					<Attribute Name="Other Rules"/>
 				</AttributeType>
-				<AttributeType Name="Source Code" Definition="xxx">
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
-				<AttributeType Name="Execution Space" Definition="xxx">
+				<AttributeType Name="Execution Space" Definition="Shows where the program code runs.">
 					<Attribute Name="Local"/>
 					<Attribute Name="Admin"/>
 					<Attribute Name="Bare-Metal"/>
@@ -97,7 +98,7 @@ has value and type - we use this level to connect the classes-->
 			</Operations>
 			<Operands>
 				<Operand Name="Data">
-					<AttributeType Name="State" Definition="xxx">
+					<AttributeType Name="State" Definition="Shows where the data come from.">
 						<Attribute Name="Entered"/>
 						<Attribute Name="Stored"/>
 						<Attribute Name="In Use"/>
@@ -129,8 +130,8 @@ has value and type - we use this level to connect the classes-->
 				</ConsequenceType>
 			</Consequences>
 		</Class>
-	</Classes>
-	<Classes Kind="_DTC" Type="Bug/Weakness" Definition="Range and Domain Violation Bugs">
+	</Cluster>
+	<Cluster Name="_DTC" Type="Bug/Weakness" Definition="Range and Domain Violation Bugs">
 		<Class Name="TDD" Title="Type Definition/Declaration Bugs" Definition="A data type is defined improperly or an object is declared with a data type improperly.">
 			<Operations>
 				<Operation Name="Define Data Type"/>
@@ -139,10 +140,10 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="Standard Type"/>
 					<Attribute Name="User Defined Type"/>
 				</AttributeType>
-				<AttributeType Name="Source Code" Definition="xxx">
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
 			</Operations>
 			<Operands>
@@ -169,10 +170,9 @@ has value and type - we use this level to connect the classes-->
 		</Class>
 		<Class Name="TUS" Title="Data Type Use Bugs" Definition="A data type is used improperly.">
 			<Operations>
-				<!--Type Arithmetics-->
 				<Operation Name="Invoke"/>
 				<Operation Name="Slect by Type"/>
-				<AttributeType Name="Mechanism" Definition="xxx">
+				<AttributeType Name="Mechanism" Definition="Shows which operator or method uses the data type improperly.-->">
 					<Attribute Name="Compound Assignment Operator"/>
 					<Attribute Name="Arithmetics Operator"/>
 					<Attribute Name="Relational Operator"/>
@@ -183,10 +183,10 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="Function (e.g. from math libraries)"/>
 					<Attribute Name="Method (for classes)"/>
 				</AttributeType>
-				<AttributeType Name="Source Code" Definition="xxx">
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
 			</Operations>
 			<Operands>
@@ -250,27 +250,29 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="Function (e.g. from math libraries)"/>
 					<Attribute Name="Method (for classes)"/>
 				</AttributeType>
-				<AttributeType Name="Source Code" Definition="xxx">
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
 			</Operations>
 			<Operands>
 				<Operand Name="Data">
-					<AttributeType Name="Scope" Definition="xxx">
+					<AttributeType Name="Scope Change" Definition="Shows if data moves in or out of a block.">
 						<Attribute Name="In"/>
 						<Attribute Name="Out"/>
 					</AttributeType>
-					<AttributeType Name="Damage" Definition="xxx">
+					<AttributeType Name="Damage" Definition="How the data were altered.">
 						<Attribute Name="Truncated"/>
 						<Attribute Name="Distorted"/>
 						<Attribute Name="Rounded"/>
 					</AttributeType>
 				</Operand>
-				<AttributeType Name="Kind" Definition="xxx">
+				<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
 					<Attribute Name="Primitive"/>
-					<Attribute Name="Structure"/>
+					<!--A standard/basic data type such as byte, short, int (signed, unsigned), long, float, double, boolean, char, string-->
+					<Attribute Name="Structured"/>
+					<!--A user-defined data type in which each  value is a collection of different types of data, such as a record or an OOP class. It groups related data of various types for convenient access using the same identifier.-->
 				</AttributeType>
 			</Operands>
 			<Causes>
@@ -299,8 +301,8 @@ has value and type - we use this level to connect the classes-->
 				</ConsequenceType>			
 			</Consequences>
 		</Class>
-	</Classes>
-	<Classes Kind="_MEM" Type="Bug/Weakness" Definition="Memory Corruption Bugs">
+	</Cluster>
+	<Cluster Name="_MEM" Type="Bug/Weakness" Definition="Memory Corruption Bugs">
 		<Class Name="MAD" Title="Memory Addressing Bugs" Definition="The pointer to an object is initialized, repositioned, or reassigned to animproper memory address.">
 			<Operations>
 				<Operation Name="Initialize"/>
@@ -313,7 +315,7 @@ has value and type - we use this level to connect the classes-->
 				<AttributeType Name="Source Code">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
 				<AttributeType Name="Execution Space">
 					<Attribute Name="Userland"/>
@@ -405,12 +407,12 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="Implicit"/>
 					<Attribute Name="Explicit"/>
 				</AttributeType>
-				<AttributeType Name="Source Code" Definition="xxx">
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
-				<AttributeType Name="Execution Space" Definition="xxx">
+				<AttributeType Name="Execution Space" Definition="Shows where the program code runs.">
 					<Attribute Name="Userland"/>
 					<Attribute Name="Kernel"/>
 					<Attribute Name="Bare-Metal"/>
@@ -479,12 +481,12 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="Direct"/>
 					<Attribute Name="Sequential"/>
 				</AttributeType>
-				<AttributeType Name="Source Code" Definition="xxx">
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
-				<AttributeType Name="Execution Space" Definition="xxx">
+				<AttributeType Name="Execution Space" Definition="Shows where the program code runs.">
 					<Attribute Name="Userland"/>
 					<Attribute Name="Kernel"/>
 					<Attribute Name="Bare-Metal"/>
@@ -558,12 +560,12 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="Implicit"/>
 					<Attribute Name="Explicit"/>
 				</AttributeType>
-				<AttributeType Name="Source Code" Definition="xxx">
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
-				<AttributeType Name="Execution Space" Definition="xxx">
+				<AttributeType Name="Execution Space" Definition="Shows where the program code runs.">
 					<Attribute Name="Userland"/>
 					<Attribute Name="Kernel"/>
 					<Attribute Name="Bare-Metal"/>
@@ -618,8 +620,8 @@ has value and type - we use this level to connect the classes-->
 				</ConsequenceType>
 			</Consequences>
 		</Class>
-	</Classes>
-	<Classes Kind="_CRY" Type="Bug/Weakness" Definition="Cryptographic Store or Transfer Bugs">
+	</Cluster>
+	<Cluster Name="_CRY" Type="Bug/Weakness" Definition="Cryptographic Store or Transfer Bugs">
 		<Class Name="ENC" Title="Encryption Bugs" Definition="Sensitive data (plaintext) are improperly transformed into unintelligible form (ciphertext) using a cryptographic algorithm and key(s).">
 			<Operations>
 				<Operation Name="Encrypt"/>
@@ -628,12 +630,12 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="xxx"/>
 					<Attribute Name="xxx"/>
 				</AttributeType>
-				<AttributeType Name="Source Code" Definition="xxx">
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
-				<AttributeType Name="Execution Space" Definition="xxx">
+				<AttributeType Name="Execution Space" Definition="Shows where the program code runs.">
 					<Attribute Name="Userland"/>
 					<Attribute Name="Kernel"/>
 					<Attribute Name="Bare-Metal"/>
@@ -649,7 +651,7 @@ has value and type - we use this level to connect the classes-->
 						<Attribute Name="Secret"/>
 						<Attribute Name="Public"/>
 					</AttributeType>
-					<AttributeType Name="State" Definition="xxx">
+					<AttributeType Name="State" Definition="Shows where the data come from.">
 						<Attribute Name="Stored"/>
 						<!--<Attribute Name="In Use"/> IB: Shoulf we add this?-->
 						<Attribute Name="Transferred"/>
@@ -704,12 +706,12 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="xxx"/>
 					<Attribute Name="xxx"/>
 				</AttributeType>
-				<AttributeType Name="Source Code" Definition="xxx">
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
-				<AttributeType Name="Execution Space" Definition="xxx">
+				<AttributeType Name="Execution Space" Definition="Shows where the program code runs.">
 					<Attribute Name="Userland"/>
 					<Attribute Name="Kernel"/>
 					<Attribute Name="Bare-Metal"/>
@@ -729,7 +731,7 @@ has value and type - we use this level to connect the classes-->
 						<Attribute Name="Cryptographic Data"/>
 						<Attribute Name="Digital Documents"/>
 					</AttributeType>
-					<AttributeType Name="State" Definition="xxx">
+					<AttributeType Name="State" Definition="Shows where the data come from.">
 						<Attribute Name="Stored"/>
 						<!--<Attribute Name="In Use"/> IB: Shoulf we add this?-->
 						<Attribute Name="Transferred"/>
@@ -791,12 +793,12 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="xxx"/>
 					<Attribute Name="xxx"/>
 				</AttributeType>
-				<AttributeType Name="Source Code" Definition="xxx">
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/> <!--"Programming Language Processor"-->
+					<Attribute Name="Compiler/Interpretor"/>
 				</AttributeType>
-				<AttributeType Name="Execution Space" Definition="xxx">
+				<AttributeType Name="Execution Space" Definition="Shows where the program code runs.">
 					<Attribute Name="Userland"/>
 					<Attribute Name="Kernel"/>
 					<Attribute Name="Bare-Metal"/>
@@ -815,7 +817,7 @@ has value and type - we use this level to connect the classes-->
 						<Attribute Name="Keying Material"/>
 						<Attribute Name="Digital Certificate"/>
 					</AttributeType>
-					<AttributeType Name="State" Definition="xxx">
+					<AttributeType Name="State" Definition="Shows where the data come from.">
 						<Attribute Name="Stored"/>
 						<!--<Attribute Name="In Use"/> IB: Shoulf we add this?-->
 						<Attribute Name="Transferred"/>
@@ -863,8 +865,8 @@ has value and type - we use this level to connect the classes-->
 				</ConsequenceType>
 			</Consequences>
 		</Class>
-	</Classes>
-	<Classes Kind="_RND" Type="Bug/Weakness" Definition="Random Number Generation Bugs">
+	</Cluster>
+	<Cluster Name="_RND" Type="Bug/Weakness" Definition="Random Number Generation Bugs">
 		<Class Name="TRN" Title="xxx" Definition="xxx">
 			<Operands>
 				<Operand Name="xxx"/>
@@ -907,9 +909,9 @@ has value and type - we use this level to connect the classes-->
 				</ConsequenceType>
 			</Consequences>
 		</Class>
-	</Classes>
+	</Cluster>
 
-	<Classes Kind="_FLR" Type="Failure" Definition="">
+	<Cluster Name="_FLR" Type="Failure" Definition="">
 		<Class Name="IEX" Title="Information Exposure" Definition="Information Exposure">
 			<Operations>
 				<Operation Name="IEX Operation"/>
@@ -958,7 +960,7 @@ has value and type - we use this level to connect the classes-->
 				</ConsequenceType>
 			</Consequences>
 		</Class>
-	</Classes>
+	</Cluster>
 
 	<!--Tooltips-->
 	<Definitions>
@@ -996,7 +998,7 @@ has value and type - we use this level to connect the classes-->
 		<!--General Improper Operations-->
 		<Definition Name="Missing">The operation is absent.</Definition>
 		<Definition Name="Erroneous">There’s a bug in the operation implementation.</Definition>
-		<!--Kind (cluster) specific improper operations-->
+		<!--Cluster specific improper operations-->
 		<Definition Name="Mismatched">The deallocation function does not match the allocation function used for the same object.</Definition>
 		<Definition Name="Under-Restrictive Policy">Accepts bad data.</Definition>
 		<Definition Name="Over-Restrictive Policy">Rejects good data.</Definition>
@@ -1057,8 +1059,8 @@ has value and type - we use this level to connect the classes-->
 		<Definition Name="Codebase">The operation is in programmer's code -- in the application itself.</Definition>
 		<!--<Definition Name="Third Party">The operation is in a third party library.</Definition>
 		<Definition Name="Standard Library">The operation is in the standard library for a particular programming language.</Definition>-->
-		<Definition Name="Code Library">The operation is in a third party library or in the standard library for a particular programming language.</Definition>
-		<Definition Name="Compiler/Interpretor">The operation is in the tool that allows execution or creates executable (compiler, assembler, interpreter).</Definition>
+		<Definition Name="Library">The operation is in a third party library or in the standard library for a particular programming language.</Definition>
+		<Definition Name="Compiler/Interpretor">The operation is in the language processor (compiler, assembler, interpreter) that allows execution or creates executable.</Definition>
 		<Definition Name="Execution Space">Where the code is running.</Definition>
 		<Definition Name="Userland">The bugged code runs in an environment with privilege levels, but in unprivileged mode (e.g., ring 3 in x86 architecture).</Definition>
 		<Definition Name="Kernel">The bugged code runs in an environment with privilege levels with access privileged instructions (e.g., ring 0 in x86 architecture).</Definition>

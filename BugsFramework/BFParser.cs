@@ -19,13 +19,13 @@ namespace BugsFramework
                 .ToDictionary(d => d.Attribute("Name")!.Value, d => d.Value);
         }
 
-        public Dictionary<TypeDefinition, IEnumerable<TypeDefinition>> GetClasses(string type) =>
-            bfClasses.XPathSelectElements($"//Classes[@Type='{type}']").ToDictionary(
-                t => new TypeDefinition(t.Attribute("Kind")!.Value, t.Attribute("Definition")?.Value),
+        public Dictionary<NameDefinition, IEnumerable<NameDefinition>> GetClasses(string type) =>
+            bfClasses.XPathSelectElements($"//Cluster[@Type='{type}']").ToDictionary(
+                t => new NameDefinition(t.Attribute("Name")!.Value, t.Attribute("Definition")?.Value),
                 t => t.XPathSelectElements("Class").Select(
-                    n => new TypeDefinition(n.Attribute("Name")!.Value, n.Attribute("Definition")?.Value)));
+                    n => new NameDefinition(n.Attribute("Name")!.Value, n.Attribute("Definition")?.Value)));
 
-        public Dictionary<TypeDefinition, IEnumerable<TypeDefinition>> GetClasses(BWF type) =>
+        public Dictionary<NameDefinition, IEnumerable<NameDefinition>> GetClasses(BWF type) =>
             GetClasses(type switch {
                 BWF.Failure => "Failure",
                 _ => "Bug/Weakness"
@@ -36,27 +36,27 @@ namespace BugsFramework
         public IEnumerable<string> GetOperations(string bfClass) =>
             GetClass(bfClass)!.XPathSelectElements("Operations/Operation").Select(n => n.Attribute("Name")!.Value);
 
-        public Dictionary<TypeDefinitionBWF, IEnumerable<string>> GetCauses(string bfClass) =>
+        public Dictionary<NameDefinitionBWF, IEnumerable<string>> GetCauses(string bfClass) =>
             GetClass(bfClass)!.XPathSelectElements("Causes/*").ToDictionary(
-                n => new TypeDefinitionBWF(n.Attribute("Name")!.Value, n.Attribute("Definition")?.Value, n.Name.LocalName switch {
+                n => new NameDefinitionBWF(n.Attribute("Name")!.Value, n.Attribute("Definition")?.Value, n.Name.LocalName switch {
                 "BugCauseType" => BWF.Bug, "FailureCauseType" => BWF.Failure, _ => BWF.Weakness}),
                 n => n.XPathSelectElements("Cause").Select(v => v.Attribute("Name")!.Value));
 
-        public Dictionary<TypeDefinition, IEnumerable<string>> GetConsequences(string bfClass) =>
+        public Dictionary<NameDefinition, IEnumerable<string>> GetConsequences(string bfClass) =>
             GetClass(bfClass)!.XPathSelectElements("Consequences/ConsequenceType").ToDictionary(
-                n => new TypeDefinition(n.Attribute("Name")!.Value, n.Attribute("Definition")?.Value),
+                n => new NameDefinition(n.Attribute("Name")!.Value, n.Attribute("Definition")?.Value),
                 n => n.XPathSelectElements("Consequence").Select(v => v.Attribute("Name")!.Value));
 
-        public Dictionary<TypeDefinition, IEnumerable<string>> GetOperationAttributes(string bfClass) =>
+        public Dictionary<NameDefinition, IEnumerable<string>> GetOperationAttributes(string bfClass) =>
             GetClass(bfClass)!.XPathSelectElements("Operations/AttributeType").ToDictionary(
-                t => new TypeDefinition(t.Attribute("Name")!.Value, t.Attribute("Definition")?.Value),
+                t => new NameDefinition(t.Attribute("Name")!.Value, t.Attribute("Definition")?.Value),
                 t => t.XPathSelectElements("Attribute").Select(v => v.Attribute("Name")!.Value));
 
-        public Dictionary<string, Dictionary<TypeDefinition, IEnumerable<string>>> GetOperandAttributes(string bfClass) =>
+        public Dictionary<string, Dictionary<NameDefinition, IEnumerable<string>>> GetOperandAttributes(string bfClass) =>
             GetClass(bfClass)!.XPathSelectElements("Operands/Operand[AttributeType/Attribute]").ToDictionary(
                 t => t.Attribute("Name")!.Value,
                 t => t.XPathSelectElements("AttributeType").ToDictionary(
-                    n => new TypeDefinition(n.Attribute("Name")!.Value, t.Attribute("Definition")?.Value),
+                    n => new NameDefinition(n.Attribute("Name")!.Value, t.Attribute("Definition")?.Value),
                     n => n.XPathSelectElements("Attribute").Select(v => v.Attribute("Name")!.Value)));
 
         public string? GetDefinition(string name) => definitions.TryGetValue(name, out var val) ? val : null;
