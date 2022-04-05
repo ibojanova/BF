@@ -148,9 +148,11 @@ has value and type - we use this level to connect the classes-->
 			</Operations>
 			<Operands>
 				<Operand Name="Data Type">
-					<AttributeType Name="Kind" Definition="xxx">
+					<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
 						<Attribute Name="Primitive"/>
-						<Attribute Name="Structure"/>
+						<!--A standard/basic data type such as byte, short, int (signed, unsigned), long, float, double, boolean, char, string-->
+						<Attribute Name="Structured"/>
+						<!--A user-defined data type in which each  value is a collection of different types of data, such as a record or an OOP class. It groups related data of various types for convenient access using the same identifier.-->
 					</AttributeType>
 				</Operand>
 			</Operands>
@@ -172,16 +174,16 @@ has value and type - we use this level to connect the classes-->
 			<Operations>
 				<Operation Name="Invoke"/>
 				<Operation Name="Slect by Type"/>
-				<AttributeType Name="Mechanism" Definition="Shows which operator or method uses the data type improperly.-->">
+				<AttributeType Name="Mechanism" Definition="Shows which operator or method uses data type(s) improperly.-->">
 					<Attribute Name="Compound Assignment Operator"/>
 					<Attribute Name="Arithmetics Operator"/>
 					<Attribute Name="Relational Operator"/>
 					<Attribute Name="Logical Operator"/>
 					<Attribute Name="Bitwise Operator"/>
-					<Attribute Name="Pointer Arithmetics (to calculate object size, memory to allocate) – pointer issues"/>
-					<Attribute Name="Pointer Scaling (to calculate position or pointer, memory address) – pointer issues"/>
-					<Attribute Name="Function (e.g. from math libraries)"/>
-					<Attribute Name="Method (for classes)"/>
+					<Attribute Name="Pointer Arithmetics"/> <!--to calculate object size, memory to allocate – pointer issues-->
+					<Attribute Name="Pointer Scaling"/> <!--to calculate position or pointer, memory address) – pointer issues-->
+					<Attribute Name="Function"/> <!-- (e.g. from math libraries)-->
+					<Attribute Name="Method"/> <!-- (for classes)-->
 				</AttributeType>
 				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
@@ -202,7 +204,7 @@ has value and type - we use this level to connect the classes-->
 						<Attribute Name="Pointer"/>
 						<Attribute Name="String"/>
 					</AttributeType>
-					<AttributeType Name="Kind" Definition="xxx">
+					<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
 						<Attribute Name="Primitive"/>
 						<Attribute Name="Structure"/>
 					</AttributeType>					
@@ -270,9 +272,7 @@ has value and type - we use this level to connect the classes-->
 				</Operand>
 				<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
 					<Attribute Name="Primitive"/>
-					<!--A standard/basic data type such as byte, short, int (signed, unsigned), long, float, double, boolean, char, string-->
-					<Attribute Name="Structured"/>
-					<!--A user-defined data type in which each  value is a collection of different types of data, such as a record or an OOP class. It groups related data of various types for convenient access using the same identifier.-->
+					<Attribute Name="Structure"/>
 				</AttributeType>
 			</Operands>
 			<Causes>
@@ -990,7 +990,7 @@ has value and type - we use this level to connect the classes-->
 		<Definition Name="Correct">Modify data (assign new value, remove), in order to make it accurate.</Definition>
 		<!--Operands-->
 		<!--Need to update - see DTC slides-->
-		<Definition Name="Object">A memory region used to store data. %The data could be a primitive data, such as integer or boolean; or a data structure, such as array, record, or OOP Object.</Definition>
+		<Definition Name="Object">A memory region used to store data. xxxThe data could be a primitive data, such as integer or boolean; or a data structure, such as array, record, or OOP class.</Definition>
 		<Definition Name="Pointer">A holder of the memory address of an object.</Definition>
 		<Definition Name="Data">A string of characters (symbols like letter, digit, punctuation) with clearly defined syntax and semantics.</Definition>
 		<!--CG: It is kind of the policy is operand and we also have policy on operations.-->
