@@ -14,7 +14,7 @@ namespace BugsFramework
         readonly Dictionary<string, string> definitions;
         public BFParser()
         {
-            bfClasses = XElement.Parse(Properties.Resources.BFxml);
+            bfClasses = XElement.Parse(Properties.Resources.BF);
             definitions = bfClasses.XPathSelectElements("//Definitions/Definition")
                 .ToDictionary(d => d.Attribute("Name")!.Value, d => d.Value);
         }
