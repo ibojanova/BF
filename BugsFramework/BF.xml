@@ -192,12 +192,13 @@ has value and type - we use this level to connect the classes-->
 				</AttributeType>
 			</Operations>
 			<Operands>
+				<!--IB: These values (Truncated, Rounded) should be used in the comments for the conseqeunce
 				<Operand Name="Data">
-					<AttributeType Name="Result" Definition="xxx">
+					<AttributeType Name="Damage" Definition="xxx">
 						<Attribute Name="Truncated"/>
 						<Attribute Name="Rounded"/>
 					</AttributeType>
-				</Operand>
+				</Operand>-->
 				<Operand Name="Data Type">
 					<AttributeType Name="Issue" Definition="xxx">
 						<Attribute Name="Numeric"/>
@@ -248,7 +249,7 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="Arithmetics Operator"/>
 					<Attribute Name="Relational Operator"/>
 					<Attribute Name="Logical Operator"/>
-					<Attribute Name="Cast Operator"/>
+					<Attribute Name="Cast Operator"/> <!--(type) operator-->
 					<Attribute Name="Function (e.g. from math libraries)"/>
 					<Attribute Name="Method (for classes)"/>
 				</AttributeType>
@@ -264,11 +265,11 @@ has value and type - we use this level to connect the classes-->
 						<Attribute Name="In"/>
 						<Attribute Name="Out"/>
 					</AttributeType>
-					<AttributeType Name="Damage" Definition="How the data were altered.">
+					<!--<AttributeType Name="Damage" Definition="How the data were altered.">
 						<Attribute Name="Truncated"/>
 						<Attribute Name="Distorted"/>
 						<Attribute Name="Rounded"/>
-					</AttributeType>
+					</AttributeType>-->
 				</Operand>
 				<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
 					<Attribute Name="Primitive"/>
@@ -988,6 +989,14 @@ has value and type - we use this level to connect the classes-->
 		<!--DVR Operations-->
 		<Definition Name="Verify">Check data semantics (proper value/meaning) in order to accept (and possibly correct) or reject it.</Definition>
 		<Definition Name="Correct">Modify data (assign new value, remove), in order to make it accurate.</Definition>
+
+		<!--TUS Operations-->
+		<Definition Name="Invoke">xxx.</Definition>
+		<Definition Name="Select by Type">xxx.</Definition>
+		
+		
+		
+		
 		<!--Operands-->
 		<!--Need to update - see DTC slides-->
 		<Definition Name="Object">A memory region used to store data. xxxThe data could be a primitive data, such as integer or boolean; or a data structure, such as array, record, or OOP class.</Definition>

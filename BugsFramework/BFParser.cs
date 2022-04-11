@@ -8,7 +8,7 @@ namespace BugsFramework
 {
     public class BFParser
     {
-        public readonly static BFParser Parser = new BFParser();
+        public readonly static BFParser Parser = new();
 
         readonly XElement bfClasses;
         readonly Dictionary<string, string> definitions;
