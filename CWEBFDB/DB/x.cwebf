@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CWEBF>
+	<Clusters Name="_INP">
+		<Class name="DVL" />
+		op cwes
+		<Class name="DVR" />
+	</Clusters>
+	<Clusters Name="_DTC">
+		<Class name="TDD" />
+		<Class name="TUS" />
+		<Class name="TCC" />
+	</Clusters>
+	<Clusters Name="_MEM">
+		<Class name="MAD" />
+		<Class name="MAL" />
+		<Class name="MUS" />
+		<Class name="MDL" />
+	</Clusters>
+	<Clusters Name="_CRY">
+		<Class name="ENC" />
+		<Class name="VRF" />
+		<Class name="KMN" />
+	</Clusters>
+	<Clusters Name="_RND">
+		<Class name="TRN" />
+		<Class name="PRN" />
+	</Clusters>
+	<Clusters Name="_FLR">
+		<Class name="IEX" />
+		<Class name="RCE" />
+		<Class name="DOS" />
+	</Clusters>
+</CWEBF>
