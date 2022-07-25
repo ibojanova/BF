@@ -7,7 +7,7 @@ using BFCVEDB;
 namespace BFCVE
 {
     //adds new members to TreeNode to hold the Weakness object and Bug/Weakness/Fault flag about the weakness type
-    // xxx: make subclass of TreeNode<Data>
+    // xxx make subclass of TreeNode<Data>
     public class TreeNodeWeakness : TreeNode
     {
         public Weakness Weakness = new();

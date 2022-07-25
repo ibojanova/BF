@@ -16,6 +16,7 @@ namespace Utilities
         public TreeNode(string id, string? toolTip, IEnumerable<System.Windows.Forms.TreeNode> children, Data? nodeData = default)
             : base(id, children.ToArray()) => (Name, ToolTipText, NodeData) = (id, toolTip, nodeData);
 
+        //xxx should revice this xxx here and in the subclasses
         //public IEnumerable<TreeNode<Data>> SubNodes => Nodes.OfType<TreeNode<Data>>();
     }
 

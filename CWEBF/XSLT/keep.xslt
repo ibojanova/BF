@@ -10,7 +10,7 @@
 				<xsl:variable name="coord" select="p:spPr/a:xfrm/a:off"/>
 				<xsl:variable name="size" select="p:spPr/a:xfrm/a:ext"/>
 				<KeepNode Id="{$id}" x="{round($coord/@x + $size/@cx div 2)}" y="{round($coord/@y + $size/@cy div 2)}"/>
-					<!--<xsl:apply-templates select="." mode="keep"><xsl:with-param name="id" select="$id"/></xsl:apply-templates>
+				<!--<xsl:apply-templates select="." mode="keep"><xsl:with-param name="id" select="$id"/></xsl:apply-templates>
 				</KeepNode>-->
 			</xsl:for-each>
 		</xsl:if>
@@ -19,14 +19,18 @@
 	<xsl:template match="@* | * | text()[normalize-space()]" mode="keep">
 		<xsl:param name="id"/>
 		<xsl:copy>
-			<xsl:apply-templates select="@* | * | text()[normalize-space()]" mode="keep"><xsl:with-param name="id" select="$id"/></xsl:apply-templates>
+			<xsl:apply-templates select="@* | * | text()[normalize-space()]" mode="keep">
+				<xsl:with-param name="id" select="$id"/>
+			</xsl:apply-templates>
 		</xsl:copy>
 	</xsl:template>
 
 	<xsl:template match="p:cNvPr[@name='nodeCWE']/@id" mode="keep" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
 		<xsl:param name="id"/>
-		<xsl:attribute name="{name()}"><xsl:value-of select="$id"/></xsl:attribute>
-	</xsl:template>	
+		<xsl:attribute name="{name()}">
+			<xsl:value-of select="$id"/>
+		</xsl:attribute>
+	</xsl:template>
 
 	<!--xxxlinks-->
 	<!--<xsl:template match="a:hlinkClick/@r:id" mode="keep" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
@@ -48,7 +52,7 @@
 		</xsl:attribute>
 	</xsl:template>-->
 
-	<!--Fig. 4-->
+	<!--Fig. 4 - _INP-->
 	<!--<xsl:template match="a:ln/a:solidFill/a:srgbClr/@val" mode="keep" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
 		<xsl:param name="id"/>
 		<xsl:variable name="class" select="msxsl:node-set($showCWEs)/*[.=$id]/@class"/>
@@ -63,7 +67,7 @@
 		</xsl:attribute>
 	</xsl:template>-->
 
-	<!--Fig. 5-->
+	<!--Fig. 5 - _INP-->
 	<!--($showClassCWEs)//CWE-->
 	<!--<xsl:template match="a:ln/a:solidFill/a:srgbClr/@val" mode="keep" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
 		<xsl:param name="id"/>
@@ -80,5 +84,5 @@
 	</xsl:template>-->
 
 	<!--<xsl:template match="a:extLst" mode="keep" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"/>-->
-	
+
 </xsl:stylesheet>

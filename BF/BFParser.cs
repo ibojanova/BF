@@ -19,13 +19,6 @@ namespace BF
                 .ToDictionary(d => d.Attribute("Name")!.Value, d => d.Value);
         }
 
-        //xxx fix to be one method with the next one
-        public Dictionary<NameDefinition, IEnumerable<NameDefinition>> GetClasses() =>
-            bfClasses.XPathSelectElements($"//Cluster").ToDictionary(
-                t => new NameDefinition(t.Attribute("Name")!.Value, t.Attribute("Definition")?.Value),
-                t => t.XPathSelectElements("Class").Select(
-                    n => new NameDefinition(n.Attribute("Name")!.Value, n.Attribute("Definition")?.Value)));
-
         public Dictionary<NameDefinition, IEnumerable<NameDefinition>> GetClasses(string type) =>
             bfClasses.XPathSelectElements($"//Cluster[@Type='{type}']").ToDictionary(
                 t => new NameDefinition(t.Attribute("Name")!.Value, t.Attribute("Definition")?.Value),
@@ -40,10 +33,8 @@ namespace BF
 
         XElement? GetClass(string bfClass) => bfClasses.XPathSelectElement($"//Class[@Name='{bfClass}']");
 
-        public IEnumerable<string> GetOperations(string bfClass) =>
+        public IEnumerable<string> GetOperations(string bfClass) => 
             GetClass(bfClass)!.XPathSelectElements("Operations/Operation").Select(n => n.Attribute("Name")!.Value);
-
-        
         
         public Dictionary<NameDefinitionBWF, IEnumerable<string>> GetCauses(string bfClass) =>
             GetClass(bfClass)!.XPathSelectElements("Causes/*").ToDictionary(
@@ -51,9 +42,10 @@ namespace BF
                 "BugCauseType" => BWF.Bug, "WeaknessCauseType" => BWF.Weakness, _ => BWF.Failure}),
                 n => n.XPathSelectElements("Cause").Select(v => v.Attribute("Name")!.Value));
 
-        public Dictionary<NameDefinition, IEnumerable<string>> GetConsequences(string bfClass) =>
-            GetClass(bfClass)!.XPathSelectElements("Consequences/ConsequenceType").ToDictionary(
-                n => new NameDefinition(n.Attribute("Name")!.Value, n.Attribute("Definition")?.Value),
+        public Dictionary<NameDefinitionBWF, IEnumerable<string>> GetConsequences(string bfClass) =>
+            GetClass(bfClass)!.XPathSelectElements("Consequences/*").ToDictionary(
+                n => new NameDefinitionBWF(n.Attribute("Name")!.Value, n.Attribute("Definition")?.Value, n.Name.LocalName switch {
+                    "WeaknessConsequenceType" => BWF.Weakness, "FinalErrorConsequenceType" => BWF.Failure, _ => BWF.Failure}),
                 n => n.XPathSelectElements("Consequence").Select(v => v.Attribute("Name")!.Value));
 
         public Dictionary<NameDefinition, IEnumerable<string>> GetOperationAttributes(string bfClass) =>

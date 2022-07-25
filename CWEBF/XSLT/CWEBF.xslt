@@ -7,21 +7,19 @@
 	<xsl:output method="xml" indent="yes"/>
 
 	<xsl:include href="_DTC.xslt"/>
-	<!--<xsl:include href="DVL DVR CWEs.xslt"/>-->
-	<!--<xsl:include href="CRY CWEs.xslt"/>-->
 		
 	<xsl:include href="keep.xslt"/>
 
 	<!--Read Me: 
-	Set params: fromEmptySlide, updownDepth, showViews, showCWEs, hideCWEs, nature
+	Set params: fromCurrentCWEBF (0 will start from emoty slide), updownDepth, showViews, nature; AND in _<clusterName>.xslt: showClassCWEs, $showConsequenceCWEs, and  hideCWEs, 
 	Run with: 
 		input cwec_vx.x.xml (https://cwe.mitre.org/data/xml/cwec_latest.xml.zip - download newst version from https://cwe.mitre.org/data/downloads.html >XML Content > ZIP)
 		output CWEBF.xml
 	Open CWEBF.xml in PowerPoint, SAVE AS CurrentCWEBF.xml and open again and rearrange node
-	Run again with new set for param showCWEs"
-	Once finalied save "BF Classxxx CWEs.xml"-->
+	Run again with new set for param showXXXCWEs"
+	Once finalized save "_<clusterName> - CWEBF.xml"-->
 	
-	<!-- IMPORTANT NOTE to attach arrows, open CWEBF.xml, save it, ans open again
+	<!-- IMPORTANT NOTE to attach arrows, open CWEBF.xml, save it, and open again
 	arrows attached to nodes repair after upload to Google Drive - replace all "Google Shape.+" with "nodeCWE" -->
 
 	<!--=======================reg exprs for manual fixes==============================================-->
@@ -29,11 +27,17 @@
 	<!--(\d*)\r\n
 	<CWE class="DVL">${0}</CWE>
 	
-	create pdf_tex file
+	create regular pdf file:
+	select figure in PPT
+	copy/paste in Inkscape
+	CTRL+Shift+D> Resize to Content
+	save as .PDF, enter, Omit text from PDF
+	
+	create pdf_tex file:
 	select figure in PPT
 	save as .svg
 	open in InkScape
-	CTRL+D> Resize Page to Content
+	CTRL+Shift+D> Resize to Content
 	save as .PDF, enter, Omit text from PDF
 
 	replace CWE # in pdf_tex 
@@ -79,13 +83,14 @@
 	s=size, f=font; fs=font size; c=color, w=width; cm=compound; d=dash
 	5 colors: pillar - red, Class - blue, Base - purple, Variant - green, Compound - yellow-->
 
+	<!-- changes size for _DTC from 3600 to 3200-->
 	<xsl:param name="nodeStyles">
 		<Caption n="CWEs by Abstraction:" c="FFFFFF" u="sng" x="32117693" y="25852362"/>
-		<CWEabstr n="Pillar" f="Calibri" fs="3600" c="7F7F7F" w="70000" cm="dbl" d="solid"/>
-		<CWEabstr n="Class" f="Calibri" fs="3600" c="7F7F7F" w="70000" cm="sng"  d="sysDot"/>
-		<CWEabstr n="Base" f="Calibri" fs="3600" c="7F7F7F" w="70000" cm="dbl" d="sysDot"/>
+		<CWEabstr n="Pillar" f="Calibri" fs="3200" c="7F7F7F" w="70000" cm="dbl" d="solid"/>
+		<CWEabstr n="Class" f="Calibri" fs="3200" c="7F7F7F" w="70000" cm="sng"  d="sysDot"/>
+		<CWEabstr n="Base" f="Calibri" fs="3200" c="7F7F7F" w="70000" cm="dbl" d="sysDot"/>
 		<CWEabstr n="Variant" f="Calibri" fs="3600" c="7F7F7F" w="70000" cm="sng" d="solid"/>
-		<CWEabstr n="Compound" f="Calibri" fs="3600" c="7F7F7F" w="70000" cm="thickThin" d="solid"/>
+		<CWEabstr n="Compound" f="Calibri" fs="3200" c="7F7F7F" w="70000" cm="thickThin" d="solid"/>
 	</xsl:param>
 	
 	<!-- Arrow style depends on CWE Nature
@@ -306,7 +311,7 @@
 				<!--node with hyperlink-->
 				<a:p> <a:pPr algn="ctr"/> <a:r> <a:rPr sz="{2700 + 900*(@Id &lt; 1000)}">
 					<a:solidFill><a:srgbClr val="{$fontColor}"/>
-					</a:solidFill><a:hlinkClick r:id="link{@Id}"/>
+					</a:solidFill><!--<a:hlinkClick r:id="link{@Id}"/>-->
 					</a:rPr> <a:t> <xsl:value-of select="@Id"/> </a:t> </a:r> </a:p>
 			</p:txBody>
 		</p:sp>
@@ -346,7 +351,7 @@
 		</p:cxnSp>
 	</xsl:template>
 
-	<!-- Calulate arrow: node connectors, coordinates -->
+	<!-- Calculate arrow: node connectors, coordinates -->
 	<xsl:variable name="coef45" select="0.7071067811865475"/>
 	<xsl:variable name="coef225" select="0.4142135623730950488016887242097"/>
 	<xsl:variable name="coef675" select="2.4142135623730950488016887242097"/>

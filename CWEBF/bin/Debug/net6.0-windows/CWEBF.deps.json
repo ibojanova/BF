@@ -1,0 +1,58 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "CWEBF/1.0.0": {
+        "dependencies": {
+          "BF": "1.0.0",
+          "CWEBFDB": "1.0.0",
+          "Utilities": "1.0.0"
+        },
+        "runtime": {
+          "CWEBF.dll": {}
+        }
+      },
+      "BF/1.0.0": {
+        "runtime": {
+          "BF.dll": {}
+        }
+      },
+      "CWEBFDB/1.0.0": {
+        "runtime": {
+          "CWEBFDB.dll": {}
+        }
+      },
+      "Utilities/1.0.0": {
+        "runtime": {
+          "Utilities.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CWEBF/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BF/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CWEBFDB/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Utilities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0-windows7.0": {
+      "BF/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BF.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BF.dll": {}
+        }
+      },
+      "CWEBFDB/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/CWEBFDB.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CWEBFDB.dll": {}
+        }
+      },
+      "Utilities/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Utilities.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Utilities.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BF/1.0.0": {
+      "type": "project",
+      "path": "../BF/BF.csproj",
+      "msbuildProject": "../BF/BF.csproj"
+    },
+    "CWEBFDB/1.0.0": {
+      "type": "project",
+      "path": "../CWEBFDB/CWEBFDB.csproj",
+      "msbuildProject": "../CWEBFDB/CWEBFDB.csproj"
+    },
+    "Utilities/1.0.0": {
+      "type": "project",
+      "path": "../Utilities/Utilities.csproj",
+      "msbuildProject": "../Utilities/Utilities.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0-windows7.0": [
+      "BF >= 1.0.0",
+      "CWEBFDB >= 1.0.0",
+      "Utilities >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\ivb\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\_BF\\BF\\CWEBF\\CWEBF.csproj",
+      "projectName": "CWEBF",
+      "projectPath": "C:\\_BF\\BF\\CWEBF\\CWEBF.csproj",
+      "packagesPath": "C:\\Users\\ivb\\.nuget\\packages\\",
+      "outputPath": "C:\\_BF\\BF\\CWEBF\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\ivb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0-windows7.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
+          "projectReferences": {
+            "C:\\_BF\\BF\\BF\\BF.csproj": {
+              "projectPath": "C:\\_BF\\BF\\BF\\BF.csproj"
+            },
+            "C:\\_BF\\BF\\CWEBFDB\\CWEBFDB.csproj": {
+              "projectPath": "C:\\_BF\\BF\\CWEBFDB\\CWEBFDB.csproj"
+            },
+            "C:\\_BF\\BF\\Utilities\\Utilities.csproj": {
+              "projectPath": "C:\\_BF\\BF\\Utilities\\Utilities.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0-windows7.0": {
+        "targetAlias": "net6.0-windows",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WindowsForms": {
+            "privateAssets": "none"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

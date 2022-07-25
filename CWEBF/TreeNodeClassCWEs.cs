@@ -6,13 +6,10 @@ using Utilities;
 
 namespace CWEBF
 {
-    public record ClassCWEs (ItemCWEs [] ShowCWEList, Color Color);
+    public record ClassCWEs (CWE [] ShowCWEList, Color Color);
 
-    //NodeData with CWEsLists, etc.
     public class TreeNodeClassCWEs : TreeNode<ClassCWEs>
     {
-        // public Color Color = Color.Black;
-
         public TreeNodeClassCWEs(string id, string? toolTip, ClassCWEs cwes)
             : base(id, toolTip, cwes) { }
     }

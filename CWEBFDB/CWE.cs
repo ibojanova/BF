@@ -5,6 +5,7 @@ namespace CWEBFDB
 {
     public class CWE
     {
+        //xxx should be int
         public string ID { get; set; } = string.Empty;
     }
 

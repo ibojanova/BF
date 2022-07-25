@@ -87,7 +87,7 @@ namespace CWEBF
             this.shouwClassCWEs.Size = new System.Drawing.Size(543, 277);
             this.shouwClassCWEs.TabIndex = 136;
             this.shouwClassCWEs.TextChanged += new System.EventHandler(this.Comment_TextChanged);
-            this.shouwClassCWEs.Validating += new System.ComponentModel.CancelEventHandler(this.Comment_Validating);
+            //this.shouwClassCWEs.Validating += new System.ComponentModel.CancelEventHandler(this.Comment_Validating);
             // 
             // showClassCWEsLabel
             // 
@@ -121,7 +121,7 @@ namespace CWEBF
             this.classes.Size = new System.Drawing.Size(273, 1177);
             this.classes.TabIndex = 111;
             this.classes.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.BeforeSelect);
-            this.classes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.AfterSelect);
+            //this.classes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.AfterSelect);
             // 
             // classesLabel
             // 

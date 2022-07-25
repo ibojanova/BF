@@ -1,11 +1,10 @@
-<!--@author Irena Bojanova(ivb)
-*@date - 07/09/2021 -->
+<!--@author Irena Bojanova(ivb)-->
+<!--@date - 07/09/2021-->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl">
 	<!--Slide1-->
-	<!--xxx these are rather showOperationCWEs-->
-	<xsl:param name="showClassCWEs">
-		<Class name="DVL Validate">
+	<xsl:param name="showOperationCWEs">
+		<ClassOperation name="DVL Validate">
 			<CWE>41</CWE>
 			<CWE>42</CWE>
 			<CWE>43</CWE>
@@ -45,8 +44,8 @@
 			<CWE>707</CWE>
 			<CWE>913</CWE>
 			<CWE>1286</CWE>
-		</Class>
-		<Class name="DVL Sanitize">
+		</ClassOperation>
+		<ClassOperation name="DVL Sanitize">
 			<CWE>22</CWE>
 			<CWE>23</CWE>
 			<CWE>24</CWE>
@@ -137,8 +136,8 @@
 			<CWE>943</CWE>
 			<CWE>1236</CWE>
 			<CWE>1336</CWE>
-		</Class>
-		<Class name="DVR Verify">
+		</ClassOperation>
+		<ClassOperation name="DVR Verify">
 			<CWE>129</CWE>
 			<CWE>130</CWE>
 			<CWE>170</CWE>
@@ -154,9 +153,8 @@
 			<CWE>1287</CWE>
 			<CWE>1288</CWE>
 			<CWE>1289</CWE>
-		</Class>
-		<!--xxx these instead could be repeating in each of DVL Validate and DVR Verify above, and the contour color to be a mix of the two colors-->
-		<Class name="DVL Validate and DVR Verify">
+		</ClassOperation>
+		<ClassOperation name="DVL Validate and DVR Verify">
 			<CWE>15</CWE>
 			<CWE>20</CWE>
 			<CWE>73</CWE>
@@ -176,7 +174,7 @@
 			<CWE>625</CWE>
 			<CWE>1173</CWE>
 			<CWE>1174</CWE>
-		</Class>
+		</ClassOperation>
 	</xsl:param>
 
 	<xsl:param name="showOtherCWEs">
@@ -351,8 +349,7 @@
 	</xsl:param>
 
 	<!--Slide2-->
-	<!--xxx these are rather showFinalErrorCWEs-->
-	<xsl:param name="showConsequenceCWEs">		
+	<xsl:param name="showFinalErrorCWEs">		
 		<Consequence name="Query Injection">
 			<CWE>89</CWE>
 			<CWE>90</CWE>
@@ -573,10 +570,10 @@
 	<!--Slide1-->
 	<xsl:param name="classStyles"> 
 		<Caption n="CWEs by DVL and/or DVR operation:" c="FFFFFF" u="sng" x="10858514" y="25852362"/>
-		<Class n="DVL Validate" c="0099FF"/>
-		<Class n="DVL Sanitize" c="339966"/>
-		<Class n="DVR Verify" c="FF3399"/>
-		<Class n="DVL Validate and DVR Verify" c="9966FF"/>
+		<ClassOperation n="DVL Validate" c="0099FF"/>
+		<ClassOperation n="DVL Sanitize" c="339966"/>
+		<ClassOperation n="DVR Verify" c="FF3399"/>
+		<ClassOperation n="DVL Validate and DVR Verify" c="9966FF"/>
 
 		<Caption n="CWEs by Input and/or Output:" c="FFFFFF" u="sng" x="21464743" y="25852362"/>
 		<IO n="Input" c="C8C8DA" fill="FFFFFF"/>

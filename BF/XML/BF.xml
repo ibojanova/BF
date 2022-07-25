@@ -6,7 +6,7 @@
 has value and type - we use this level to connect the classes-->
 
 <BF Name="Bugs Framework">
-	<Cluster Name="_INP" Type="Bug/Weakness" Definition="Input/Output Check Bugs (with Injection as Final Error)">
+	<Cluster Name="_INP" Type="Bug/Weakness" Definition="Input/Output Check Bugs (incl. Injection Error)">
 		<Class Name="DVL" Title="Data Validation Bugs" Definition="Data are validated (syntax check) or sanitized (escape, filter, repair) improperly.">
 			<Operations>
 				<Operation Name="Validate"/>
@@ -18,6 +18,11 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="Length"/>
 				</AttributeType>
 				<!--The operation attributes Source Code and Execution Space explain where a bug is – where the operation is in the program and where its code runs.-->
+				
+				<!--xxx
+				Attribute
+					Value
+					Value-->
 				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
@@ -38,11 +43,16 @@ has value and type - we use this level to connect the classes-->
 						<Attribute Name="Transferred"/>
 					</AttributeType>
 				</Operand>
-				<Operand Name="Policy Data" Definition="The data defining the policy (e.g. the values in a Safelist)."/>
+				<Operand Name="Policy" Definition="Operand Rule: The data defining the policy (e.g. the values in a Safelist)."/>
 			</Operands>
 			<Causes>
 				<!--Improper Operation - "The Bug" - could be improper code or improper rules (Policy, Keying Material, Domain Parameter) code that has to be fixed to resolve to vulnerablity cause by this bug."-->
-				<BugCauseType Name="Improper Code" Definition="The Bug is a Coding Error">
+
+				<!--xxx
+				BugCause
+					Value
+					Value-->
+				<BugCauseType Name="Improper Operation" Definition="The Bug is a Coding Error">
 					<Cause Name="Missing"/>
 					<Cause Name="Erroneous"/>
 				</BugCauseType>
@@ -105,10 +115,10 @@ has value and type - we use this level to connect the classes-->
 						<Attribute Name="Transferred"/>
 					</AttributeType>
 				</Operand>
-				<Operand Name="Policy Data"/>
+				<Operand Name="Policy" Definition="Operand Rule: The data defining the policy."/>
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug is a Coding Error">
+				<BugCauseType Name="Improper Operation" Definition="The Bug is a Coding Error">
 					<Cause Name="Missing"/>
 					<Cause Name="Erroneous"/>
 				</BugCauseType>
@@ -131,14 +141,14 @@ has value and type - we use this level to connect the classes-->
 			</Consequences>
 		</Class>
 	</Cluster>
-	<Cluster Name="_DTC" Type="Bug/Weakness" Definition="Range and Domain Violation Bugs">
-		<Class Name="TDD" Title="Type Definition/Declaration Bugs" Definition="A data type is defined improperly or an object is declared with a data type improperly.">
+	<Cluster Name="_DTP" Type="Bug/Weakness" Definition="Data Type Bugs (incl. Convert and Compute Errors)">
+		<Class Name="TDD" Title="Type Definition and Declaration Bugs" Definition="A data type is defined improperly, or an object or a function is declared with an improper data type.">
 			<Operations>
-				<Operation Name="Define Data Type"/>
-				<Operation Name="Declare Object"/>
+				<Operation Name="Declare"/>
+				<Operation Name="Define"/>
 				<AttributeType Name="Mechanism" Definition="xxx">
-					<Attribute Name="Standard Type"/>
-					<Attribute Name="User Defined Type"/>
+					<Attribute Name="Simple"/>
+					<Attribute Name="Hierarchy"/>
 				</AttributeType>
 				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
@@ -157,7 +167,7 @@ has value and type - we use this level to connect the classes-->
 				</Operand>
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug is a Coding Error">
+				<BugCauseType Name="Improper Operation" Definition="The Bug is a Coding Error">
 					<Cause Name="Wrong"/>
 					<Cause Name="Missing"/>
 				</BugCauseType>
@@ -170,16 +180,119 @@ has value and type - we use this level to connect the classes-->
 				</WeaknessConsequenceType>
 			</Consequences>
 		</Class>
-		<Class Name="TUS" Title="Data Type Use Bugs" Definition="A data type is used improperly.">
+		<Class Name="TRS" Title="Data Type Resolution Bugs" Definition="The name of an entity, the data type of an object, or a polymorphic function or data type is resolved improperly.">
 			<Operations>
-				<Operation Name="Invoke"/>
-				<Operation Name="Slect by Type"/>
+				<Operation Name="Declare"/>
+				<Operation Name="Define"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Simple"/>
+					<Attribute Name="Hierarchy"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Data Type">
+					<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
+						<Attribute Name="Primitive"/>
+						<!--A standard/basic data type such as byte, short, int (signed, unsigned), long, float, double, boolean, char, string-->
+						<Attribute Name="Structured"/>
+						<!--A user-defined data type in which each  value is a collection of different types of data, such as a record or an OOP class. It groups related data of various types for convenient access using the same identifier.-->
+					</AttributeType>
+				</Operand>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Operation" Definition="The Bug is a Coding Error">
+					<Cause Name="Wrong"/>
+					<Cause Name="Missing"/>
+				</BugCauseType>
+			</Causes>
+			<Consequences>
+				<WeaknessConsequenceType Name="Improper Data Type" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Data Type"/>
+					<Consequence Name="Wrong Precision for Type"/>
+					<Consequence Name="Wrong Size for Type"/>
+				</WeaknessConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="TCV" Title="Data Type Conversion Bugs" Definition="Data are converted or casted improperly to another data type.">
+			<Operations>
+				<Operation Name="Coerce"/>
+				<Operation Name="Convert"/>
+				<!--<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Assignment Operator"/>
+					<Attribute Name="Compound Assignment Operator"/>
+					<Attribute Name="Arithmetics Operator"/>
+					<Attribute Name="Relational Operator"/>
+					<Attribute Name="Logical Operator"/>
+					<Attribute Name="Cast Operator"/> -->
+				<!--(type) operator-->
+				<!--
+					<Attribute Name="Function (e.g. from math libraries)"/>
+					<Attribute Name="Method (for classes)"/>
+				</AttributeType>-->
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Data">
+					<!--<AttributeType Name="Scope Change" Definition="Shows if data moves in or out of a block.">
+						<Attribute Name="In"/>
+						<Attribute Name="Out"/>
+					</AttributeType>-->
+					<!--<AttributeType Name="Damage" Definition="How the data were altered.">
+						<Attribute Name="Truncated"/>
+						<Attribute Name="Distorted"/>
+						<Attribute Name="Rounded"/>
+					</AttributeType>-->
+				</Operand>
+				<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
+					<Attribute Name="Primitive"/>
+					<Attribute Name="Structure"/>
+				</AttributeType>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Operation" Definition="The Bug is a Coding Error">
+					<Cause Name="Wrong"/>
+					<Cause Name="Missing"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Data Value" Definition="Domain Violation: A Weakness - Result From Previous Operation">
+					<Cause Name="Over Type Range"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Data Type" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Wrong Type"/>
+					<Cause Name="Mismatched Type"/>
+				</WeaknessCauseType>
+			</Causes>
+			<Consequences>
+				<WeaknessConsequenceType Name="Improper Data Value" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Value"/>
+				</WeaknessConsequenceType>
+				<WeaknessConsequenceType Name="Improper Data Type" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Type"/>
+					<Consequence Name="Incompatible Type"/>
+				</WeaknessConsequenceType>
+				<FinalErrorConsequenceType Name="Type Use Error" Definition="Final Error">
+					<Consequence Name="Undefined Value"/>
+				</FinalErrorConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="TCM" Title="Data Type Compute Bugs" Definition="A numeric value is calculated improperly or a true/false decision is made improperly.">
+			<Operations>
+				<Operation Name="Calculate"/>
+				<Operation Name="Decide"/>
 				<AttributeType Name="Mechanism" Definition="Shows which operator or method uses data type(s) improperly.-->">
 					<Attribute Name="Compound Assignment Operator"/>
 					<Attribute Name="Arithmetics Operator"/>
 					<Attribute Name="Relational Operator"/>
 					<Attribute Name="Logical Operator"/>
-					<Attribute Name="Bitwise Operator"/>
+					<Attribute Name="Bitwise Shift Operator"/>
 					<Attribute Name="Pointer Arithmetics"/> <!--to calculate object size, memory to allocate – pointer issues-->
 					<Attribute Name="Pointer Scaling"/> <!--to calculate position or pointer, memory address) – pointer issues-->
 					<Attribute Name="Function"/> <!-- (e.g. from math libraries)-->
@@ -200,11 +313,11 @@ has value and type - we use this level to connect the classes-->
 					</AttributeType>
 				</Operand>-->
 				<Operand Name="Data Type">
-					<AttributeType Name="Issue" Definition="xxx">
+					<!--<AttributeType Name="Issue" Definition="xxx">
 						<Attribute Name="Numeric"/>
 						<Attribute Name="Pointer"/>
 						<Attribute Name="String"/>
-					</AttributeType>
+					</AttributeType>-->
 					<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
 						<Attribute Name="Primitive"/>
 						<Attribute Name="Structure"/>
@@ -212,7 +325,7 @@ has value and type - we use this level to connect the classes-->
 				</Operand>
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug is a Coding Error">
+				<BugCauseType Name="Improper Operation" Definition="The Bug is a Coding Error">
 					<Cause Name="Wrong"/>
 					<Cause Name="Erroneous"/>
 				</BugCauseType>
@@ -238,72 +351,8 @@ has value and type - we use this level to connect the classes-->
 				</FinalErrorConsequenceType>
 			</Consequences>
 		</Class>
-		<Class Name="TCC" Title="Data Type Conversion Bugs" Definition="Data are converted or casted improperly to another data type.">
-			<Operations>
-				<Operation Name="Convert"/>
-				<Operation Name="Cast"/>
-				<Operation Name="Coerce"/>
-				<AttributeType Name="Mechanism" Definition="xxx">
-					<Attribute Name="Assignment Operator"/>
-					<Attribute Name="Compound Assignment Operator"/>
-					<Attribute Name="Arithmetics Operator"/>
-					<Attribute Name="Relational Operator"/>
-					<Attribute Name="Logical Operator"/>
-					<Attribute Name="Cast Operator"/> <!--(type) operator-->
-					<Attribute Name="Function (e.g. from math libraries)"/>
-					<Attribute Name="Method (for classes)"/>
-				</AttributeType>
-				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
-					<Attribute Name="Codebase"/>
-					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/>
-				</AttributeType>
-			</Operations>
-			<Operands>
-				<Operand Name="Data">
-					<AttributeType Name="Scope Change" Definition="Shows if data moves in or out of a block.">
-						<Attribute Name="In"/>
-						<Attribute Name="Out"/>
-					</AttributeType>
-					<!--<AttributeType Name="Damage" Definition="How the data were altered.">
-						<Attribute Name="Truncated"/>
-						<Attribute Name="Distorted"/>
-						<Attribute Name="Rounded"/>
-					</AttributeType>-->
-				</Operand>
-				<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
-					<Attribute Name="Primitive"/>
-					<Attribute Name="Structure"/>
-				</AttributeType>
-			</Operands>
-			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug is a Coding Error">
-					<Cause Name="Wrong"/>
-					<Cause Name="Missing"/>
-				</BugCauseType>
-				<WeaknessCauseType Name="Improper Data Value" Definition="Domain Violation: A Weakness - Result From Previous Operation">
-					<Cause Name="Over Type Range"/>
-				</WeaknessCauseType>
-				<WeaknessCauseType Name="Improper Data Type" Definition="A Weakness - Result From Previous Operation">
-					<Cause Name="Wrong Type"/>
-					<Cause Name="Mismatched Type"/>
-				</WeaknessCauseType>
-			</Causes>
-			<Consequences>
-				<WeaknessConsequenceType Name="Improper Data Value" Definition="Input To Next Operation">
-					<Consequence Name="Wrong Value"/>
-				</WeaknessConsequenceType>
-				<WeaknessConsequenceType Name="Improper Data Type" Definition="Input To Next Operation">
-					<Consequence Name="Wrong Type"/>
-					<Consequence Name="Incompatible Type"/>
-				</WeaknessConsequenceType>
-				<FinalErrorConsequenceType Name="Type Use Error" Definition="Final Error">
-					<Consequence Name="Undefined Value"/>
-				</FinalErrorConsequenceType>			
-			</Consequences>
-		</Class>
 	</Cluster>
-	<Cluster Name="_MEM" Type="Bug/Weakness" Definition="Memory Corruption Bugs">
+	<Cluster Name="_MEM" Type="Bug/Weakness" Definition="Memory Bugs (incl. Corruption Errors)">
 		<Class Name="MAD" Title="Memory Addressing Bugs" Definition="The pointer to an object is initialized, repositioned, or reassigned to animproper memory address.">
 			<Operations>
 				<Operation Name="Initialize"/>
@@ -351,7 +400,7 @@ has value and type - we use this level to connect the classes-->
 				Size2 - needed/what should have been allocated size - that's just a number now-->
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug">
+				<BugCauseType Name="Improper Operation" Definition="The Bug">
 					<Cause Name="Missing"/>
 					<Cause Name="Mismatched"/>
 					<Cause Name="Erroneous"/>
@@ -435,7 +484,7 @@ has value and type - we use this level to connect the classes-->
 				<Operand Name="Size"/>
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug">
+				<BugCauseType Name="Improper Operation" Definition="The Bug">
 					<Cause Name="Missing"/>
 					<Cause Name="Mismatched"/>
 					<Cause Name="Erroneous"/>
@@ -509,7 +558,7 @@ has value and type - we use this level to connect the classes-->
 				<Operand Name="Size"/>
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug">
+				<BugCauseType Name="Improper Operation" Definition="The Bug">
 					<Cause Name="Missing"/>
 					<Cause Name="Mismatched"/>
 					<Cause Name="Erroneous"/>
@@ -588,7 +637,7 @@ has value and type - we use this level to connect the classes-->
 				<Operand Name="Size"/>
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug">
+				<BugCauseType Name="Improper Operation" Definition="The Bug">
 					<Cause Name="Missing"/>
 					<Cause Name="Mismatched"/>
 					<Cause Name="Erroneous"/>
@@ -622,7 +671,7 @@ has value and type - we use this level to connect the classes-->
 			</Consequences>
 		</Class>
 	</Cluster>
-	<Cluster Name="_CRY" Type="Bug/Weakness" Definition="Cryptographic Store or Transfer Bugs">
+	<Cluster Name="_CRY" Type="Bug/Weakness" Definition="Cryptographic Store or Transfer Bugs (incl. xxx Errors)">
 		<Class Name="ENC" Title="Encryption Bugs" Definition="Sensitive data (plaintext) are improperly transformed into unintelligible form (ciphertext) using a cryptographic algorithm and key(s).">
 			<Operations>
 				<Operation Name="Encrypt"/>
@@ -640,10 +689,6 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="Userland"/>
 					<Attribute Name="Kernel"/>
 					<Attribute Name="Bare-Metal"/>
-				</AttributeType>
-				<AttributeType Name="Algorithm" Definition="xxx">
-					<Attribute Name="Symmetric Encryption"/>
-					<Attribute Name="Asymmetric Encryption"/>
 				</AttributeType>
 			</Operations>
 			<Operands>
@@ -666,9 +711,15 @@ has value and type - we use this level to connect the classes-->
 						<Attribute Name="Public Key"/> <!--xxx ???-->
 					</AttributeType>
 				</Operand>
+				<Operand Name="Algorithm" Definition="Operation Rule.">
+					<AttributeType Name="Type" Definition="xxx">
+						<Attribute Name="Symmetric"/>
+						<Attribute Name="Asymmetric"/>
+					</AttributeType>
+				</Operand>
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug">
+				<BugCauseType Name="Improper Operation" Definition="The Bug">
 					<Cause Name="Missing"/>
 					<Cause Name="Erroneous"/>
 				</BugCauseType>
@@ -717,11 +768,6 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="Kernel"/>
 					<Attribute Name="Bare-Metal"/>
 				</AttributeType>
-				<AttributeType Name="Algorithm" Definition="xxx">
-					<Attribute Name="Hash Function + PRN"/>
-					<Attribute Name="MAC" Definition="Message Authentication Code"/>
-					<Attribute Name="Digital Signature"/>
-				</AttributeType>
 			</Operations>
 			<Operands>
 				<Operand Name="Data">
@@ -749,9 +795,16 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="True Random Number"/>
 					<Attribute Name="Pseudo Random Number"/>
 				</Operand>
+				<Operand Name="Algorithm" Definition="Operation Rule.">
+					<AttributeType Name="Type" Definition="xxx">
+						<Attribute Name="Hash Function + PRN"/>
+						<Attribute Name="MAC" Definition="Message Authentication Code"/>
+						<Attribute Name="Digital Signature"/>
+					</AttributeType>
+				</Operand>
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug">
+				<BugCauseType Name="Improper Operation" Definition="The Bug">
 					<Cause Name="Missing"/>
 					<Cause Name="Erroneous"/>
 				</BugCauseType>
@@ -804,12 +857,6 @@ has value and type - we use this level to connect the classes-->
 					<Attribute Name="Kernel"/>
 					<Attribute Name="Bare-Metal"/>
 				</AttributeType>
-				<AttributeType Name="Algorithm" Definition="xxx">
-					<Attribute Name="Hash Function + PRN"/>
-					<Attribute Name="MAC" Definition="Message Authentication Code"/>
-					<Attribute Name="RSA" Definition="Rivest–Shamir–Adleman"/>
-					<Attribute Name="Digital Signature"/>
-				</AttributeType>
 			</Operations>
 			<Operands>
 				<Operand Name="Data">
@@ -832,13 +879,19 @@ has value and type - we use this level to connect the classes-->
 						<Attribute Name="Public Key"/> <!--xxx ???-->
 					</AttributeType>
 				</Operand>
-				<Operand Name="Random Number">
+				<Operand Name="Random Number" Definition="xxx">
 					<Attribute Name="True Random Number"/>
 					<Attribute Name="Pseudo Random Number"/>
 				</Operand>
+				<Operand Name="Algorithm" Definition="Operation Rule: xxx">
+					<Attribute Name="Hash Function + PRN"/>
+					<Attribute Name="MAC" Definition="Message Authentication Code"/>
+					<Attribute Name="RSA" Definition="Rivest–Shamir–Adleman"/>
+					<Attribute Name="Digital Signature"/>
+				</Operand>
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug">
+				<BugCauseType Name="Improper Operation" Definition="The Bug">
 					<Cause Name="Missing"/>
 					<Cause Name="Erroneous"/>
 				</BugCauseType>
@@ -867,13 +920,13 @@ has value and type - we use this level to connect the classes-->
 			</Consequences>
 		</Class>
 	</Cluster>
-	<Cluster Name="_RND" Type="Bug/Weakness" Definition="Random Number Generation Bugs">
+	<Cluster Name="_RND" Type="Bug/Weakness" Definition="Random Number Generation Bugs (incl. xxx Errors">
 		<Class Name="TRN" Title="xxx" Definition="xxx">
 			<Operands>
 				<Operand Name="xxx"/>
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug">
+				<BugCauseType Name="Improper Operation" Definition="The Bug">
 					<Cause Name="xxx"/>
 				</BugCauseType>
 				<WeaknessCauseType Name="Improper Data Value" Definition="A Weakness - Result From Previous Operation">
@@ -894,7 +947,7 @@ has value and type - we use this level to connect the classes-->
 				<Operand Name="xxx"/>
 			</Operands>
 			<Causes>
-				<BugCauseType Name="Improper Code" Definition="The Bug">
+				<BugCauseType Name="Improper Operation" Definition="The Bug">
 					<Cause Name="xxx"/>
 				</BugCauseType>
 				<WeaknessCauseType Name="Improper Data Value" Definition="A Weakness - Result From Previous Operation">
@@ -919,16 +972,16 @@ has value and type - we use this level to connect the classes-->
 			</Operations>
 			<!-- Failure causes are the Final Error conseqeunces from previous weaknesses. -->
 			<Causes>
-				<FailureCauseType Name="Memory Error" Definition="xxx">
+				<FianalErrorCauseType Name="Memory Error" Definition="xxx">
 					<Cause Name="Buffer Overflow"/>
 					<Cause Name="Buffer Underflow"/>
-				</FailureCauseType>
+				</FianalErrorCauseType>
 			</Causes>
 			<!-- Conseqeunces are the risks. -->
 			<Consequences>
-				<FailureConsequenceType Name="xxx" Definition="ddd">
+				<RiskConsequenceType Name="xxx" Definition="ddd">
 					<Consequence Name="IEX Conseqeunce"/>
-				</FailureConsequenceType>
+				</RiskConsequenceType>
 			</Consequences>
 		</Class>
 		<Class Name="RCE" Title="Remote Code Execution" Definition="Remote Code Execution">
@@ -936,14 +989,14 @@ has value and type - we use this level to connect the classes-->
 				<Operation Name="RCE Operation"/>
 			</Operations>
 			<Causes>
-				<FailureCauseType Name="xxx" Definition="xxx">
+				<FianalErrorCauseType Name="xxx" Definition="xxx">
 					<Cause Name="RCE Cause"/>
-				</FailureCauseType>
+				</FianalErrorCauseType>
 			</Causes>
 			<Consequences>
-				<FailureConsequenceType Name="xxx" Definition="ddd">
+				<RiskConsequenceType Name="xxx" Definition="ddd">
 					<Consequence Name="RCE Conseqeunce"/>
-				</FailureConsequenceType>
+				</RiskConsequenceType>
 			</Consequences>
 		</Class>
 		<Class Name="DOS" Title="Denial of Service" Definition="Denial of Service">
@@ -951,20 +1004,21 @@ has value and type - we use this level to connect the classes-->
 				<Operation Name="DOS Operation"/>
 			</Operations>
 			<Causes>
-				<FailureCauseType Name="xxx" Definition="xxx">
+				<FianalErrorCauseType Name="xxx" Definition="xxx">
 					<Cause Name="DOS Cause"/>
-				</FailureCauseType>
+				</FianalErrorCauseType>
 			</Causes>
 			<Consequences>
-				<FailureConsequenceType Name="xxx" Definition="ddd">
+				<RiskConsequenceType Name="xxx" Definition="ddd">
 					<Consequence Name="DOS Conseqeunce"/>
-				</FailureConsequenceType>
+				</RiskConsequenceType>
 			</Consequences>
 		</Class>
 	</Cluster>
 
-	<!--Tooltips-->
-	<Definitions>
+	
+	<Definitions><!--used also as Tooltips in BF Tools-->
+		<!--_MEM Cluster-->
 		<!--MAD Operations-->
 		<Definition Name="Initialize (pointer)">The first  assign  of  an  object  address  to  a  pointer; positions  the  pointer  at  the  start  of  the  object.</Definition>
 		<Definition Name="Reposition">Changes the pointer to another position inside  its  object.</Definition>
@@ -983,34 +1037,84 @@ has value and type - we use this level to connect the classes-->
 		<Definition Name="Deallocate">Releases the allocated memory of an object.</Definition>
 		<Definition Name="Reduce">Deallocates part of the object memory; redefines its boundaries and size.</Definition>
 		<Definition Name="Reallocate–Reduce">Allocates a new smaller space in memory for an object at a new address, copies part of the object content there, reassigns the pointer, and deallocates the previous piece of memory.</Definition>
+		<!--_INP Cluster-->
 		<!--DVL Operations-->
 		<Definition Name="Validate">Check data syntax (proper form/grammar) in order to accept (and possibly sanitize) or reject it. Includes checking for missing symbols/elements.</Definition>
 		<Definition Name="Sanitize">Modify data (neutralize/escape, filter/remove, repair/add symbols) in order to make it valid (well-formed).</Definition>
 		<!--DVR Operations-->
 		<Definition Name="Verify">Check data semantics (proper value/meaning) in order to accept (and possibly correct) or reject it.</Definition>
 		<Definition Name="Correct">Modify data (assign new value, remove), in order to make it accurate.</Definition>
+		<!--_DTP Cluster-->
+		<!--TDD Operations-->
+		<Definition Name="Declare">Binds a name to an entity. Adds rules for the Type System.</Definition>
+				<!--terms to define
+				name - identifier
+				entity - an object, parameter, function, type, or namespace
+				object - variable, class member (should we give also the _MEM paper definition of an object or stay more abstract here?)
+				parameter - of function or type
+				function - incl. procedure, class method, lambda expression - Binds Name and Introduces Scope (polymorphic - same name different scopes)
+				
+				Functions both bind names and introduce a scope. The name of the function itself is bound in the surrounding scope where the function is declared. When we step into the function’s body, we also bind its parameters into that inner function scope.
+				https://craftinginterpreters.com/resolving-and-binding.html
+				
+				type - class
+				namespace/package/module - xxxA declarative region that provides a scope to the identifiers (the names of types, functions, variables, etc) inside it. Namespaces are used to organize code into logical groups and to prevent name collisions that can occur especially when your code base includes multiple libraries. All identifiers at namespace scope are visible to one another without qualification. Identifiers outside the namespace can access the members by using the fully qualified name for an identifier or by "using/include/xxx" Directive for all the identifiers in the namespace.
+					+ package, generic
+				scope - 
+				-->
+		<Definition Name="Define">Introduces the function body.</Definition>
+				<!--terms to define
+				function body 
+				-->
 
-		<!--TUS Operations-->
-		<Definition Name="Invoke">xxx.</Definition>
-		<Definition Name="Select by Type">xxx.</Definition>
+		<!--TRS Operations-->
+		<Definition Name="Resolve Name">Associate a name with an out of scope entity. T.e., determine the fully qualified name of that entity according to namespace scope rules.</Definition>
+		<Definition Name="Infer Type">Deduct an object's data type from its value. Usually this is done at compile time.</Definition>
+		<Definition Name="Bind Function/Type">
+			Select an overloaded function, an overriden function, or a type parameterized function or data type according polimorpc rules.
+			A type parameterized (generic) function or data type is resolved via its type arguments' data type. This is satic, early bind and reflects parametric polymorphism.
+			An overloaded functions (operator) is resolved by its arguments' data types; the return data type is not in consideration. This is a static, ad-hoc bind and reflects the ad-hoc polymorphism.
+			An overriden function from a hyerarchical type structure is resolved via its invoking object data type. This is dynamic late bind and reflects subtype polymorphism.
+		</Definition>
+				<!--terms to define
+				scope
+				resolve
+				bind - Associate a function call to a function body (iplementation).
+				static bind - at Compile time. Overload and generic are static bind.
+				dynamic Bind - at Run time. Override is dynamic bind.
+				https://craftinginterpreters.com/resolving-and-binding.html
+				https://beginnersbook.com/2013/04/java-static-dynamic-binding/
+				-->
+		<!--TCV Operations-->
+		<Definition Name="Coerce">Implicit (forced) conversion of an object data type to another data type (i.e. type juggling) when passing-in function arguments or passing-out the result.</Definition>
+		<Definition Name="Convert">Explicit conversion of an object to another data type (e.g.(int x)) or use of the Cast operator to temporary cast the value of an object it to another data type (e.g. (int) x).</Definition>
+		-->
 		
+		<!--TCM Operations-->
+		<Definition Name="Calculate">Calculate a numeric expression. The resul is a numeric value - e.g. how much memory to allocate, memory address, buffer size, position of index. Operators can be arithmetic, bitwise shift, pointer arithmetic, sizeof (pointer scaling).</Definition>
+		<!--terms to define
+				bitwise shift
+				pointer arithmetics
+				pointer schaling
+				size of object/pointer
+		-->
+		<Definition Name="Evaluate">Evaluate a condition using comparison (relational) and boolean (logical) operators. Note that with boolean operators an implicit conversion happens from a number to a boolean (usually 0 is false, 1 (or even all else) is true.</Definition>
 		
-		
-		
-		<!--Operands-->
-		<!--Need to update - see DTC slides-->
-		<Definition Name="Object">A memory region used to store data. xxxThe data could be a primitive data, such as integer or boolean; or a data structure, such as array, record, or OOP class.</Definition>
-		<Definition Name="Pointer">A holder of the memory address of an object.</Definition>
-		<Definition Name="Data">A string of characters (symbols like letter, digit, punctuation) with clearly defined syntax and semantics.</Definition>
-		<!--CG: It is kind of the policy is operand and we also have policy on operations.-->
-		<Definition Name="Policy">Lists or rules for checking data syntax and semantics. For example, safelist, denylist, format (e.g., DTD-XML Document Type Definition), and length; or value (incl. NULL or list of values), quantity, range, and type (e.g., a PowerPoint XSD).</Definition>
 		<!--General Improper Operations-->
 		<Definition Name="Missing">The operation is absent.</Definition>
 		<Definition Name="Erroneous">There’s a bug in the operation implementation.</Definition>
 		<!--Cluster specific improper operations-->
 		<Definition Name="Mismatched">The deallocation function does not match the allocation function used for the same object.</Definition>
 		<Definition Name="Under-Restrictive Policy">Accepts bad data.</Definition>
-		<Definition Name="Over-Restrictive Policy">Rejects good data.</Definition>
+		<Definition Name="Over-Restrictive Policy">Rejects good data.</Definition>	
+			
+		<!--Operands-->
+		<!--xxxNeed to update - see DTC slides-->
+		<Definition Name="Object">A memory region used to store data. xxxThe data could be a primitive data, such as integer or boolean; or a data structure, such as array, record, or OOP class.</Definition>
+		<Definition Name="Pointer">A holder of the memory address of an object.</Definition>
+		<Definition Name="Data">A string of characters (symbols like letter, digit, punctuation) with clearly defined syntax and semantics.</Definition>
+		<!--CG: It is kind of the policy is operand and we also have policy on operations.-->
+		<Definition Name="Policy">Lists or rules for checking data syntax and semantics. For example, safelist, denylist, format (e.g., DTD-XML Document Type Definition), and length; or value (incl. NULL or list of values), quantity, range, and type (e.g., a PowerPoint XSD).</Definition>
 		<!--Improper Operands-->
 		<!--Improper Address/Pointer-->
 		<Definition Name="NULL Pointer">Points to the zero address, a specific invalid address.</Definition>
@@ -1069,7 +1173,7 @@ has value and type - we use this level to connect the classes-->
 		<!--<Definition Name="Third Party">The operation is in a third party library.</Definition>
 		<Definition Name="Standard Library">The operation is in the standard library for a particular programming language.</Definition>-->
 		<Definition Name="Library">The operation is in a third party library or in the standard library for a particular programming language.</Definition>
-		<Definition Name="Compiler/Interpretor">The operation is in the language processor (compiler, assembler, interpreter) that allows execution or creates executable.</Definition>
+		<Definition Name="Compiler/Interpretor">The operation is in the language processor that allows execution or creates executable.</Definition>
 		<Definition Name="Execution Space">Where the code is running.</Definition>
 		<Definition Name="Userland">The bugged code runs in an environment with privilege levels, but in unprivileged mode (e.g., ring 3 in x86 architecture).</Definition>
 		<Definition Name="Kernel">The bugged code runs in an environment with privilege levels with access privileged instructions (e.g., ring 0 in x86 architecture).</Definition>

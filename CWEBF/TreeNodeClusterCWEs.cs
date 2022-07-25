@@ -6,13 +6,11 @@ using Utilities;
 
 namespace CWEBF
 {
-    public record ClusterCWEs (int[] GeneralCWEList, int[] HideCWEList);
+    //xxx rename General to Gray in the xslt
+    public record ClusterCWEs (int[] GrayCWEList, int[] HideCWEList);
 
-    //NodeData with CWEsLists, etc.
     public class TreeNodeClusterCWEs : TreeNode<ClusterCWEs>
     {
-        // public Color Color = Color.Black;
-
         public TreeNodeClusterCWEs(string id, string? toolTip, ClusterCWEs cwes)
             : base(id, toolTip, cwes) { }
     }

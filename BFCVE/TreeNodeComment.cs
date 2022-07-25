@@ -5,7 +5,7 @@
 
 namespace BFCVE
 {
-    //NodeData with Comment and an Unable/Disable flag to change color of node text
+    //adds Comment and an Unable/Disable flag to change color of node text
     public class TreeNodeComment : TreeNode<string>
     {
         public string? Comment { get => NodeData; set => NodeData = value; }

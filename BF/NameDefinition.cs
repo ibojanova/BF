@@ -11,11 +11,9 @@ namespace BF
         public int GetHashCode([DisallowNull] NameDefinition obj) => obj.Name.GetHashCode();
     }
 
-    //Cause Type
+    //CauseType is Bug, Weakness, or FinalError; Conseqeunce Type is Weakness, FinalError, or Risk; FinalError and Risk are only for Failure
+    //xxx we may need to add one more state to Bug, Weakness, Failure xxx
     public enum BWF { Bug, Weakness, Failure };
-
-    //xxxConsecuence Type -- !!! CFE.FinalError is actually BWF.Failure
-    public enum CFE { Consecuence, FinalError };
 
     public record NameDefinitionBWF(string Name, string? Definition, BWF BWFType) : NameDefinition(Name, Definition);
 
