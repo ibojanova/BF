@@ -141,19 +141,92 @@ has value and type - we use this level to connect the classes-->
 			</Consequences>
 		</Class>
 	</Cluster>
-	<Cluster Name="_DTP" Type="Bug/Weakness" Definition="Data Type Bugs (incl. Convert and Compute Errors)">
-		<Class Name="TDD" Title="Type Definition and Declaration Bugs" Definition="A data type is defined improperly, or an object or a function is declared with an improper data type.">
+	<Cluster Name="_DTC" Type="Bug/Weakness" Definition="Data Type Bugs (incl. Convert and Compute Errors)">
+		<Class Name="DCL" Title="Declaration Bugs" Definition="– An object, a function, a type, or a namespace is declared or defined improperly.">
 			<Operations>
 				<Operation Name="Declare"/>
 				<Operation Name="Define"/>
 				<AttributeType Name="Mechanism" Definition="xxx">
 					<Attribute Name="Simple"/>
-					<Attribute Name="Hierarchy"/>
+					<Attribute Name="Generics"/>
+					<Attribute Name="Overriding"/>
+					<Attribute Name="Overloading"/>
 				</AttributeType>
 				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
 					<Attribute Name="Compiler/Interpretor"/>
+				</AttributeType>
+				<AttributeType Name="Entity" Definition="xxx.">
+					<Attribute Name="Object"/>
+					<Attribute Name="Function"/>
+					<Attribute Name="Data Type"/>
+					<Attribute Name="Namespace"/>
+				</AttributeType>
+			</Operations>
+			<Operands>
+				<Operand Name="Data Type">
+					<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
+						<Attribute Name="Primitive"/>
+						<!--A standard/basic data type such as byte, short, int (signed, unsigned), long, float, double, boolean, char, string-->
+						<Attribute Name="Structured"/>
+						<!--A user-defined data type in which each  value is a collection of different types of data, such as a record or an OOP class. It groups related data of various types for convenient access using the same identifier.-->
+					</AttributeType>
+				</Operand>
+			</Operands>
+			<Causes>
+				<BugCauseType Name="Improper Operation" Definition="The Bug is a Coding Error.">
+					<Cause Name="Missing"/>
+					<Cause Name="Wrong"/>
+				</BugCauseType>
+				<BugCauseType Name="Improper Scope" Definition="xxx.">
+					<Cause Name="Anonymous Scope"/>
+					<Cause Name="Wrong Scope"/>
+				</BugCauseType>
+				<BugCauseType Name="Improper Modifier" Definition="xxx.">
+					<Cause Name="Missing Modifier"/>
+					<Cause Name="Wrong Modifier"/>
+				</BugCauseType>
+			</Causes>
+			<Consequences>
+				<WeaknessConsequenceType Name="Improper Data Type" Definition="Input To Next Operation.">
+					<Consequence Name="Wrong Type"/>
+					<Consequence Name="Incomplete Type"/>
+					<Consequence Name="Wrong Generic Type"/>
+					<Consequence Name="Confused Subtype"/>
+					<Consequence Name="Wrong Argument Type"/>
+				</WeaknessConsequenceType>
+				<WeaknessConsequenceType Name="Improper Function Implementation" Definition="xxx.">
+					<Cause Name="Missing Overload"/>
+				</WeaknessConsequenceType>
+				<FinalErrorConsequenceType Name="Access Error" Definition="Final Error.">
+					<Consequence Name="Wrong Access Object"/>
+					<Consequence Name="Wrong Access Function"/>
+					<Consequence Name="Wrong Access Type"/>
+				</FinalErrorConsequenceType>
+			</Consequences>
+		</Class>
+		<Class Name="NRS" Title="Name Resolution Bugs" Definition="The name of an object, a function, or a data type is resolved improperly or bound to an improper data type or implementation.">
+			<Operations>
+				<Operation Name="Refer"/>
+				<Operation Name="Call"/>
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Resolve"/>
+					<Attribute Name="Bind"/>
+					<Attribute Name="Early Bind"/>
+					<Attribute Name="Late Bind"/>
+					<Attribute Name="Ad-hoc Bind"/>
+				</AttributeType>
+				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
+					<Attribute Name="Codebase"/>
+					<Attribute Name="Library"/>
+					<Attribute Name="Compiler/Interpretor"/>
+				</AttributeType>
+				<AttributeType Name="Entity" Definition="xxx.">
+					<Attribute Name="Object"/>
+					<Attribute Name="Function"/>
+					<Attribute Name="Data Type"/>
+					<Attribute Name="Namespace"/>
 				</AttributeType>
 			</Operations>
 			<Operands>
@@ -168,72 +241,45 @@ has value and type - we use this level to connect the classes-->
 			</Operands>
 			<Causes>
 				<BugCauseType Name="Improper Operation" Definition="The Bug is a Coding Error">
-					<Cause Name="Wrong"/>
-					<Cause Name="Missing"/>
+					<Cause Name="Erroneous"/>
 				</BugCauseType>
+				<BugCauseType Name="Improper Scope" Definition="xxx.">
+					<Cause Name="Missing Qualifier"/>
+					<Cause Name="Wrong Qualifier"/>
+				</BugCauseType>
+				<WeaknessCauseType Name="Improper Data Type" Definition="xxx.">
+					<Cause Name="Incomplete Type"/>
+					<Cause Name="Wrong Generic Type"/>
+					<Cause Name="Confused Subtype"/>
+					<Cause Name="Wrong Argument Type"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Function Implementation" Definition="xxx.">
+					<Cause Name="Missing Overload"/>
+				</WeaknessCauseType>
 			</Causes>
 			<Consequences>
+				<WeaknessConsequenceType Name="Improper Data Value" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Object"/>
+				</WeaknessConsequenceType>
 				<WeaknessConsequenceType Name="Improper Data Type" Definition="Input To Next Operation">
 					<Consequence Name="Wrong Data Type"/>
-					<Consequence Name="Wrong Precision for Type"/>
-					<Consequence Name="Wrong Size for Type"/>
+				</WeaknessConsequenceType>
+				<WeaknessConsequenceType Name="Improper Function Implementation" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Function"/>
+					<Consequence Name="Wrong Generic Function"/>
+					<Consequence Name="Wrong Overridden Function"/>
+					<Consequence Name="Wrong Overloaded Function"/>
 				</WeaknessConsequenceType>
 			</Consequences>
 		</Class>
-		<Class Name="TRS" Title="Data Type Resolution Bugs" Definition="The name of an entity, the data type of an object, or a polymorphic function or data type is resolved improperly.">
+		<Class Name="TCV" Title="Type Conversion Bugs" Definition="A data value is converted or coerced into another data type improperly.">
 			<Operations>
-				<Operation Name="Declare"/>
-				<Operation Name="Define"/>
-				<AttributeType Name="Mechanism" Definition="xxx">
-					<Attribute Name="Simple"/>
-					<Attribute Name="Hierarchy"/>
-				</AttributeType>
-				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
-					<Attribute Name="Codebase"/>
-					<Attribute Name="Library"/>
-					<Attribute Name="Compiler/Interpretor"/>
-				</AttributeType>
-			</Operations>
-			<Operands>
-				<Operand Name="Data Type">
-					<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
-						<Attribute Name="Primitive"/>
-						<!--A standard/basic data type such as byte, short, int (signed, unsigned), long, float, double, boolean, char, string-->
-						<Attribute Name="Structured"/>
-						<!--A user-defined data type in which each  value is a collection of different types of data, such as a record or an OOP class. It groups related data of various types for convenient access using the same identifier.-->
-					</AttributeType>
-				</Operand>
-			</Operands>
-			<Causes>
-				<BugCauseType Name="Improper Operation" Definition="The Bug is a Coding Error">
-					<Cause Name="Wrong"/>
-					<Cause Name="Missing"/>
-				</BugCauseType>
-			</Causes>
-			<Consequences>
-				<WeaknessConsequenceType Name="Improper Data Type" Definition="Input To Next Operation">
-					<Consequence Name="Wrong Data Type"/>
-					<Consequence Name="Wrong Precision for Type"/>
-					<Consequence Name="Wrong Size for Type"/>
-				</WeaknessConsequenceType>
-			</Consequences>
-		</Class>
-		<Class Name="TCV" Title="Data Type Conversion Bugs" Definition="Data are converted or casted improperly to another data type.">
-			<Operations>
+				<Operation Name="Cast"/>
 				<Operation Name="Coerce"/>
-				<Operation Name="Convert"/>
-				<!--<AttributeType Name="Mechanism" Definition="xxx">
-					<Attribute Name="Assignment Operator"/>
-					<Attribute Name="Compound Assignment Operator"/>
-					<Attribute Name="Arithmetics Operator"/>
-					<Attribute Name="Relational Operator"/>
-					<Attribute Name="Logical Operator"/>
-					<Attribute Name="Cast Operator"/> -->
-				<!--(type) operator-->
-				<!--
-					<Attribute Name="Function (e.g. from math libraries)"/>
-					<Attribute Name="Method (for classes)"/>
-				</AttributeType>-->
+				<AttributeType Name="Mechanism" Definition="xxx">
+					<Attribute Name="Pass In"/>
+					<Attribute Name="Pass Out"/>
+				</AttributeType>
 				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
 					<Attribute Name="Library"/>
@@ -242,61 +288,58 @@ has value and type - we use this level to connect the classes-->
 			</Operations>
 			<Operands>
 				<Operand Name="Data">
-					<!--<AttributeType Name="Scope Change" Definition="Shows if data moves in or out of a block.">
-						<Attribute Name="In"/>
-						<Attribute Name="Out"/>
-					</AttributeType>-->
-					<!--<AttributeType Name="Damage" Definition="How the data were altered.">
-						<Attribute Name="Truncated"/>
-						<Attribute Name="Distorted"/>
-						<Attribute Name="Rounded"/>
-					</AttributeType>-->
+					<AttributeType Name="Data Value Kind" Definition="xxx.">
+						<Attribute Name="Numeric"/>
+						<Attribute Name="Text"/>
+						<Attribute Name="Pointer"/>
+						<Attribute Name="Boolean"/>
+					</AttributeType>
+					<AttributeType Name="Data Type Kind" Definition="xxx.">
+						<Attribute Name="Primitive"/>
+						<Attribute Name="Structure"/>
+					</AttributeType>
 				</Operand>
-				<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
-					<Attribute Name="Primitive"/>
-					<Attribute Name="Structure"/>
-				</AttributeType>
 			</Operands>
 			<Causes>
 				<BugCauseType Name="Improper Operation" Definition="The Bug is a Coding Error">
 					<Cause Name="Wrong"/>
 					<Cause Name="Missing"/>
 				</BugCauseType>
-				<WeaknessCauseType Name="Improper Data Value" Definition="Domain Violation: A Weakness - Result From Previous Operation">
-					<Cause Name="Over Type Range"/>
+				<WeaknessCauseType Name="Improper Data Value" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Under Range"/>
+					<Cause Name="Over Range"/>
+					<Cause Name="Flipped Sign"/>
 				</WeaknessCauseType>
 				<WeaknessCauseType Name="Improper Data Type" Definition="A Weakness - Result From Previous Operation">
 					<Cause Name="Wrong Type"/>
-					<Cause Name="Mismatched Type"/>
+					<Cause Name="Mismatched Argument"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Function Implementation" Definition="xxx.">
+					<Cause Name="Missing Overload"/>
 				</WeaknessCauseType>
 			</Causes>
 			<Consequences>
 				<WeaknessConsequenceType Name="Improper Data Value" Definition="Input To Next Operation">
 					<Consequence Name="Wrong Value"/>
+					<Consequence Name="Truncated Value"/>
+					<Consequence Name="Distorted Value"/>
+					<Consequence Name="Rounded Value"/>
 				</WeaknessConsequenceType>
 				<WeaknessConsequenceType Name="Improper Data Type" Definition="Input To Next Operation">
 					<Consequence Name="Wrong Type"/>
-					<Consequence Name="Incompatible Type"/>
 				</WeaknessConsequenceType>
-				<FinalErrorConsequenceType Name="Type Use Error" Definition="Final Error">
-					<Consequence Name="Undefined Value"/>
-				</FinalErrorConsequenceType>
 			</Consequences>
 		</Class>
-		<Class Name="TCM" Title="Data Type Compute Bugs" Definition="A numeric value is calculated improperly or a true/false decision is made improperly.">
+		<Class Name="TCM" Title="Type Computation Bugs" Definition="A numeric, pointer, or string value is calculated improperly of a condition is evaluated improperly.">
 			<Operations>
 				<Operation Name="Calculate"/>
-				<Operation Name="Decide"/>
+				<Operation Name="Evaluate"/>
 				<AttributeType Name="Mechanism" Definition="Shows which operator or method uses data type(s) improperly.-->">
-					<Attribute Name="Compound Assignment Operator"/>
-					<Attribute Name="Arithmetics Operator"/>
-					<Attribute Name="Relational Operator"/>
-					<Attribute Name="Logical Operator"/>
-					<Attribute Name="Bitwise Shift Operator"/>
-					<Attribute Name="Pointer Arithmetics"/> <!--to calculate object size, memory to allocate – pointer issues-->
-					<Attribute Name="Pointer Scaling"/> <!--to calculate position or pointer, memory address) – pointer issues-->
-					<Attribute Name="Function"/> <!-- (e.g. from math libraries)-->
+					<Attribute Name="Function"/>
+					<Attribute Name="Operator"/>
 					<Attribute Name="Method"/> <!-- (for classes)-->
+					<Attribute Name="Lambda Expression"/>
+					<Attribute Name="Procedure"/>
 				</AttributeType>
 				<AttributeType Name="Source Code" Definition="Shows where the operation is in the program.">
 					<Attribute Name="Codebase"/>
@@ -305,23 +348,17 @@ has value and type - we use this level to connect the classes-->
 				</AttributeType>
 			</Operations>
 			<Operands>
-				<!--IB: These values (Truncated, Rounded) should be used in the comments for the conseqeunce
 				<Operand Name="Data">
-					<AttributeType Name="Damage" Definition="xxx">
-						<Attribute Name="Truncated"/>
-						<Attribute Name="Rounded"/>
-					</AttributeType>
-				</Operand>-->
-				<Operand Name="Data Type">
-					<!--<AttributeType Name="Issue" Definition="xxx">
+					<AttributeType Name="Data Value Kind" Definition="xxx.">
 						<Attribute Name="Numeric"/>
+						<Attribute Name="Text"/>
 						<Attribute Name="Pointer"/>
-						<Attribute Name="String"/>
-					</AttributeType>-->
-					<AttributeType Name="Kind" Definition="A data type can be a primitive data type (scalar) or a structured data type (composite).">
+						<Attribute Name="Boolean"/>
+					</AttributeType>
+					<AttributeType Name="Data Type Kind" Definition="xxx.">
 						<Attribute Name="Primitive"/>
 						<Attribute Name="Structure"/>
-					</AttributeType>					
+					</AttributeType>
 				</Operand>
 			</Operands>
 			<Causes>
@@ -333,21 +370,31 @@ has value and type - we use this level to connect the classes-->
 					<Cause Name="Wrong Value"/>
 					<Cause Name="Zero (0)"/>
 				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Data Value" Definition="A Weakness - Result From Previous Operation">
+					<Cause Name="Wrong Object"/>
+					<Cause Name="Reference vs. Object"/>
+					<Cause Name="Wrong Argument"/>
+				</WeaknessCauseType>
 				<WeaknessCauseType Name="Improper Data Type" Definition="A Weakness - Result From Previous Operation">
 					<Cause Name="Wrong Type"/>
-					<Cause Name="Mismatched Type"/>
-					<Cause Name="Wrong Sign Type"/>
-					<Cause Name="Wrong Precision Type"/>
+				</WeaknessCauseType>
+				<WeaknessCauseType Name="Improper Function Implementation" Definition="Input To Next Operation">
+					<Consequence Name="Wrong Function"/>
+					<Consequence Name="Wrong Generic Function"/>
+					<Consequence Name="Wrong Overridden Function"/>
+					<Consequence Name="Wrong Overloaded Function"/>
 				</WeaknessCauseType>
 			</Causes>
 			<Consequences>
 				<WeaknessConsequenceType Name="Improper Data Value" Definition="Input To Next Operation">
-					<Consequence Name="Wrong Value"/>
-					<!--"Wrong Object Size" "Wrong Lower Bound" "Wrong Position" "Wrong Upper Bound"-->
-					<Consequence Name="Range Violation"/>
+					<Consequence Name="Under Range"/>
+					<Consequence Name="Over Range"/>
+					<Consequence Name="Flipped Sign"/>
+					<Consequence Name="Wrong Result"/>
+					<Consequence Name="Wrap Around"/>
 				</WeaknessConsequenceType>
-				<FinalErrorConsequenceType Name="Type Use Error" Definition="Final Error">
-					<Consequence Name="Undefined Value"/>
+				<FinalErrorConsequenceType Name="Type Compute Error" Definition="Final Error">
+					<Consequence Name="Undefined (div by 0)"/>
 				</FinalErrorConsequenceType>
 			</Consequences>
 		</Class>
